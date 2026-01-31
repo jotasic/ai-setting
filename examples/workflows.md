@@ -298,3 +298,257 @@ After each change:
 2. Verify no regressions
 3. Commit if successful
 ```
+
+---
+
+## 8. Performance Optimization Workflow
+
+성능 최적화 작업 시의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Measure     → /performance-profile로 현재 상태 측정      │
+│  2. Identify    → performance-optimizer로 병목 분석          │
+│  3. Prioritize  → 영향도 기반 우선순위 결정                   │
+│  4. Optimize    → 최적화 구현                                │
+│  5. Verify      → 개선 효과 측정                             │
+│  6. Document    → 최적화 결과 문서화                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example
+```
+# Step 1: Measure Baseline
+/performance-profile src/api
+
+# Step 2: Identify Bottlenecks
+Use the performance-optimizer agent to analyze:
+- API response times > 500ms
+- Database queries with EXPLAIN ANALYZE
+- Memory usage patterns
+
+# Step 3: Prioritize
+Focus on:
+1. [High] /api/orders endpoint (2s response time)
+2. [Medium] Database N+1 queries in UserService
+3. [Low] Bundle size optimization
+
+# Step 4: Optimize
+Implement:
+- Add database indexes
+- Implement query batching
+- Add Redis caching
+
+# Step 5: Verify Improvement
+/performance-profile src/api
+# Compare before/after metrics
+
+# Step 6: Document
+Use doc-writer to document:
+- Optimizations made
+- Performance improvements achieved
+- Monitoring recommendations
+```
+
+---
+
+## 9. Dependency Update Workflow
+
+의존성 업데이트 작업 시의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Audit       → /dependency-audit로 취약점 스캔            │
+│  2. Plan        → 업데이트 순서 및 위험도 분석                │
+│  3. Update      → 점진적 업데이트                            │
+│  4. Test        → 호환성 테스트                              │
+│  5. Commit      → 변경사항 커밋                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example
+```
+# Step 1: Security Audit
+/dependency-audit
+
+# Step 2: Plan Updates
+Use the dependency-manager agent to:
+- Prioritize security vulnerabilities
+- Check breaking changes in major updates
+- Create update sequence
+
+# Step 3: Update (one at a time for majors)
+npm update lodash
+npm install react@18 --save
+
+# Step 4: Test Compatibility
+/run-tests
+/build
+
+# Step 5: Commit
+/commit chore(deps): update lodash to fix CVE-2021-xxxx
+/commit feat(deps): upgrade to React 18
+```
+
+---
+
+## 10. API Design & Implementation Workflow
+
+새 API를 설계하고 구현할 때의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Design      → api-designer로 엔드포인트 설계             │
+│  2. Spec        → OpenAPI 스펙 작성                         │
+│  3. Implement   → 백엔드 구현                                │
+│  4. Validate    → API 스키마 검증                           │
+│  5. Document    → /api-docs-generate로 문서 생성            │
+│  6. Test        → API 통합 테스트                           │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example
+```
+# Step 1: Design API
+Use the api-designer agent to design order management API:
+- CRUD operations for orders
+- Order status transitions
+- Webhook for status changes
+
+# Step 2: Create OpenAPI Spec
+Based on design, create openapi.yaml with:
+- Request/response schemas
+- Error responses
+- Authentication requirements
+
+# Step 3: Implement
+Implement endpoints following the spec:
+- POST /api/v1/orders
+- GET /api/v1/orders/:id
+- PATCH /api/v1/orders/:id/status
+
+# Step 4: Validate
+Validate implementation matches spec
+
+# Step 5: Generate Docs
+/api-docs-generate ./docs/api
+
+# Step 6: Test
+Use test-writer to add API integration tests
+```
+
+---
+
+## 11. Database Migration Workflow
+
+데이터베이스 스키마 변경 시의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Design      → database-specialist로 스키마 설계          │
+│  2. Plan        → 마이그레이션 전략 수립                      │
+│  3. Create      → /db-migrate create로 마이그레이션 생성     │
+│  4. Test        → 스테이징에서 테스트                         │
+│  5. Backup      → 프로덕션 백업                              │
+│  6. Execute     → /db-migrate run으로 실행                  │
+│  7. Verify      → 데이터 무결성 확인                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example
+```
+# Step 1: Design Schema Change
+Use the database-specialist agent to design:
+- Add "subscription_tier" to users table
+- Add "subscriptions" table
+- Define relationships
+
+# Step 2: Plan Migration Strategy
+For zero-downtime:
+1. Add nullable column
+2. Deploy code that writes to both
+3. Backfill existing data
+4. Add NOT NULL constraint
+5. Deploy code that reads new column
+
+# Step 3: Create Migration
+/db-migrate create add-subscription-support
+
+# Step 4: Test on Staging
+/db-migrate run --env=staging
+/run-tests --env=staging
+
+# Step 5: Backup Production
+pg_dump production > backup_$(date +%Y%m%d).sql
+
+# Step 6: Execute
+/db-migrate run --env=production
+
+# Step 7: Verify
+Check data integrity and application health
+```
+
+---
+
+## 12. Release Management Workflow
+
+릴리즈 준비 및 배포 시의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Freeze      → 기능 동결, 안정화                          │
+│  2. Test        → 전체 테스트 스위트 실행                     │
+│  3. Changelog   → /changelog로 릴리즈 노트 생성              │
+│  4. Version     → 버전 번호 업데이트                          │
+│  5. Tag         → Git 태그 생성                              │
+│  6. Deploy      → 프로덕션 배포                               │
+│  7. Monitor     → 배포 후 모니터링                            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example
+```
+# Step 1: Feature Freeze
+Merge only bug fixes to release branch
+
+# Step 2: Full Test Suite
+/run-tests
+/code-quality
+
+# Step 3: Generate Changelog
+/changelog 2.0.0
+
+# Step 4: Update Version
+npm version 2.0.0
+
+# Step 5: Create Tag
+git tag -a v2.0.0 -m "Release 2.0.0"
+git push origin v2.0.0
+
+# Step 6: Deploy
+Deploy to production via CI/CD
+
+# Step 7: Monitor
+- Check error rates
+- Monitor performance metrics
+- Watch user feedback channels
+```
+
+---
+
+## Workflow Selection Guide
+
+| 상황 | 권장 워크플로우 |
+|------|----------------|
+| 새 기능 개발 | Feature Development (#1) |
+| 버그 수정 | Bug Fix (#2) |
+| PR 리뷰 | Code Review (#3) |
+| 코드 개선 | Refactoring (#4) |
+| 보안 점검 | Security Audit (#5) |
+| 문서 작성 | Documentation (#6) |
+| 새 프로젝트 | Onboarding (#7) |
+| 속도 개선 | Performance Optimization (#8) |
+| 패키지 업데이트 | Dependency Update (#9) |
+| API 개발 | API Design (#10) |
+| DB 변경 | Database Migration (#11) |
+| 버전 배포 | Release Management (#12) |
