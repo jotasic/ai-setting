@@ -1,12 +1,45 @@
 ---
 name: full-dev
 description: 요구사항부터 개발 완료까지 전체 플로우 실행
-argument-hint: <feature-description>
+argument-hint: <feature> [--from=<phase>] [--spec=<path>]
 ---
 
 # Full Development Flow
 
 요구사항: $ARGUMENTS
+
+## 사용법
+
+```bash
+# 전체 플로우 (기획부터)
+/full-dev 사용자 알림 기능
+
+# 기존 기획서로 시작 (Planning 스킵)
+/full-dev 알림 기능 --spec=docs/specs/notification-prd.md
+
+# 특정 단계부터 시작
+/full-dev 알림 기능 --from=design      # Design부터
+/full-dev 알림 기능 --from=implement   # Implementation부터
+/full-dev 알림 기능 --from=quality     # Quality부터
+```
+
+## 옵션
+
+| 옵션 | 설명 | 예시 |
+|------|------|------|
+| `--spec=<path>` | 기존 PRD 문서 경로 (Planning 스킵) | `--spec=docs/specs/auth-prd.md` |
+| `--from=<phase>` | 시작 단계 지정 | `--from=design` |
+| `--skip=<phases>` | 스킵할 단계들 | `--skip=frontend,docs` |
+
+### --from 옵션 값
+
+| 값 | 시작 단계 | 스킵되는 단계 |
+|----|----------|--------------|
+| `planning` | Phase 1 | 없음 (기본값) |
+| `design` | Phase 2 | Planning |
+| `implement` | Phase 3 | Planning, Design |
+| `quality` | Phase 4 | Planning, Design, Implementation |
+| `docs` | Phase 5 | 전부 (문서화만) |
 
 ## 실행 플로우
 
@@ -42,15 +75,21 @@ argument-hint: <feature-description>
 
 ### Phase 1: Planning
 
+**기획서가 없는 경우:**
 ```
 Use the spec-writer agent to create PRD for: $ARGUMENTS
 ```
 
 PRD 완료 후:
-
 ```
 Use the architect agent to design system architecture based on the PRD
 ```
+
+**기획서가 있는 경우 (--spec 옵션):**
+```
+Use the architect agent to design system architecture based on [spec-path]
+```
+→ spec-writer 단계 스킵, architect부터 시작
 
 ### Phase 2: Design
 
