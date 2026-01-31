@@ -1,37 +1,50 @@
-# Claude Code Reference Project
+# AI Coding Assistant Reference Project
 
-Claude Code를 효과적으로 사용하기 위한 참고 프로젝트입니다.
+다양한 AI 코딩 어시스턴트를 효과적으로 사용하기 위한 참고 프로젝트입니다.
 
 ## Quick Start
 
-이 프로젝트의 `.claude` 폴더를 프로젝트에 복사하여 사용하세요:
+이 프로젝트의 설정 폴더를 프로젝트에 복사하여 사용하세요:
 
 ```bash
-cp -r .claude /your/project/
+# Claude Code
+cp -r claude /your/project/.claude
+
+# 또는 심볼릭 링크
+ln -s /path/to/ai-setting/claude /your/project/.claude
 ```
 
 ## Project Structure
 
 ```
 .
-├── .claude/
-│   ├── agents/              # 커스텀 서브에이전트
-│   ├── skills/              # 커스텀 스킬 (슬래시 커맨드)
-│   ├── settings.json        # 권한 및 환경 설정
-│   ├── settings.local.json  # 로컬 설정 (gitignore)
-│   ├── mcp.json             # MCP 서버 설정
-│   └── hooks.json           # 훅 설정
-├── examples/
-│   ├── prompts.md           # 효과적인 프롬프트 예제
-│   ├── workflows.md         # 개발 워크플로우 가이드
-│   └── agent-selection-guide.md
-├── CLAUDE.md                # 이 파일
-└── .gitignore
+├── claude/                 # Claude Code 설정
+│   ├── agents/            # 12개의 커스텀 서브에이전트
+│   ├── skills/            # 22개의 커스텀 스킬
+│   ├── settings.json      # 권한 및 환경 설정
+│   ├── mcp.json           # MCP 서버 설정
+│   └── hooks.json         # 훅 설정
+├── gemini/                 # Google Gemini 설정 (예정)
+├── chatgpt/                # OpenAI ChatGPT 설정 (예정)
+├── cursor/                 # Cursor IDE 설정 (예정)
+├── copilot/                # GitHub Copilot 설정 (예정)
+├── windsurf/               # Windsurf 설정 (예정)
+├── examples/               # 프롬프트 및 워크플로우 예제
+│   ├── prompts.md         # 효과적인 프롬프트 예제
+│   ├── workflows.md       # 12개의 개발 워크플로우
+│   ├── agent-selection-guide.md
+│   ├── language-specific-guide.md
+│   ├── framework-specific-guide.md
+│   ├── advanced-prompts.md
+│   ├── testing-strategy.md
+│   ├── security-hardening.md
+│   └── common-mistakes.md
+└── CLAUDE.md              # 이 파일
 ```
 
 ---
 
-## Agents (서브에이전트)
+## Agents (서브에이전트) - 12개
 
 ### 모델별 에이전트 분류
 
@@ -43,19 +56,24 @@ cp -r .claude /your/project/
 | **sonnet** | `debugger` | 에러 분석, 버그 수정 |
 | **sonnet** | `test-writer` | 테스트 코드 작성, 커버리지 개선 |
 | **sonnet** | `refactorer` | 코드 리팩토링, 구조 개선 |
+| **sonnet** | `performance-optimizer` | 성능 분석, 최적화 제안 |
+| **sonnet** | `devops-specialist` | Docker, K8s, CI/CD |
+| **sonnet** | `api-designer` | REST/GraphQL API 설계 |
+| **sonnet** | `database-specialist` | 스키마 설계, 쿼리 최적화 |
 | **haiku** | `doc-writer` | 문서화, README, API 문서 |
+| **haiku** | `dependency-manager` | 의존성 관리, 보안 업데이트 |
 
 ### 사용 예시
 
 ```
 Use the architect agent to design the notification system
 Have the security-auditor agent review the auth module
-Ask the debugger agent to fix the failing tests
+Ask the devops-specialist to set up CI/CD pipeline
 ```
 
 ---
 
-## Skills (슬래시 커맨드)
+## Skills (슬래시 커맨드) - 22개
 
 ### Development Workflow
 
@@ -67,6 +85,7 @@ Ask the debugger agent to fix the failing tests
 | `/commit` | `/commit [message]` | Conventional Commits |
 | `/code-quality` | `/code-quality` | 전체 품질 파이프라인 |
 | `/git-workflow` | `/git-workflow start\|finish\|sync` | Git 브랜치 워크플로우 |
+| `/setup-env` | `/setup-env [--clean]` | 개발 환경 설정 |
 
 ### Feature Development
 
@@ -83,6 +102,25 @@ Ask the debugger agent to fix the failing tests
 | `/explain-code` | `/explain-code [file]` | 코드 설명 |
 | `/search-code` | `/search-code [query]` | 코드 검색 |
 | `/mcp-demo` | `/mcp-demo [server]` | MCP 사용법 가이드 |
+| `/architecture-review` | `/architecture-review [area]` | 아키텍처 분석 |
+| `/estimate-effort` | `/estimate-effort [desc]` | 작업 규모 추정 |
+
+### DevOps & Infrastructure
+
+| Skill | Usage | Description |
+|-------|-------|-------------|
+| `/performance-profile` | `/performance-profile [target]` | 성능 프로파일링 |
+| `/dependency-audit` | `/dependency-audit [--fix]` | 의존성 보안 검사 |
+| `/db-migrate` | `/db-migrate create\|run\|rollback` | DB 마이그레이션 |
+| `/changelog` | `/changelog [version]` | CHANGELOG 생성 |
+
+### Documentation
+
+| Skill | Usage | Description |
+|-------|-------|-------------|
+| `/api-docs-generate` | `/api-docs-generate [path]` | OpenAPI 문서 생성 |
+| `/type-check-improve` | `/type-check-improve [path]` | 타입 커버리지 개선 |
+| `/create-testdata` | `/create-testdata <model> [count]` | 테스트 데이터 생성 |
 
 ---
 
@@ -93,30 +131,41 @@ Ask the debugger agent to fix the failing tests
 ```json
 {
   "permissions": {
-    "allow": ["Bash(npm run *)", "Read", "Glob"],
-    "deny": ["Bash(rm -rf /)"]
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(docker ps*)",
+      "Bash(kubectl get*)",
+      "Read", "Glob", "Grep"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(git push --force*)"
+    ]
   }
 }
 ```
 
-### mcp.json - MCP 서버 설정
+### mcp.json - MCP 서버 설정 (16개)
 
 지원되는 MCP 서버:
 - `filesystem`: 파일시스템 접근
 - `github`: GitHub API
-- `postgres`: PostgreSQL 쿼리
+- `git`: Git 히스토리
+- `postgres`, `sqlite`: 데이터베이스
 - `memory`: 지식 그래프 메모리
 - `puppeteer`: 브라우저 자동화
-- `slack`: Slack 연동
-- `fetch`: HTTP 요청
-- `brave-search`: 웹 검색
+- `docker`: 컨테이너 관리
+- `slack`, `notion`, `linear`: 협업 도구
+- `sentry`: 에러 모니터링
+- `fetch`, `brave-search`: 웹 요청
 - `sequential-thinking`: 복잡한 추론
+- `time`: 시간 정보
 
 ### hooks.json - 훅 설정
 
 이벤트 기반 자동화:
-- `PreToolUse`: 도구 사용 전 검증
-- `PostToolUse`: 도구 사용 후 처리
+- `PreToolUse`: 도구 사용 전 검증 (위험 명령어 차단)
+- `PostToolUse`: 도구 사용 후 처리 (자동 린트, 타입 체크)
 - `Notification`: 알림
 - `Stop`: 세션 종료 시 정리
 
@@ -128,44 +177,34 @@ Ask the debugger agent to fix the failing tests
 - 아키텍처 설계
 - 보안 분석
 - 복잡한 트레이드오프 결정
-- 장기적 영향 평가
 
 ### When to use Sonnet
 - 일반 코딩 작업
 - 코드 리뷰
 - 테스트 작성
 - 버그 수정
-- 리팩토링
 
 ### When to use Haiku
 - 문서화
 - 간단한 설명
 - 빠른 응답 필요
-- 대량 처리
 
 ---
 
-## Common Workflows
+## Workflows (12개)
 
-### 1. Feature Development
-```
-architect → /new-feature → test-writer → code-reviewer → doc-writer → /commit
-```
-
-### 2. Bug Fix
-```
-debugger → fix → /run-tests → /commit
-```
-
-### 3. Code Review
-```
-security-auditor → code-reviewer → /run-tests
-```
-
-### 4. Refactoring
-```
-architect (plan) → /run-tests (baseline) → refactorer → /run-tests (verify)
-```
+1. **Feature Development**: 설계 → 구현 → 테스트 → 리뷰 → 문서화
+2. **Bug Fix**: 재현 → 분석 → 수정 → 검증
+3. **Code Review**: 보안 → 품질 → 테스트 커버리지
+4. **Refactoring**: 식별 → 계획 → 테스트 → 리팩토링 → 검증
+5. **Security Audit**: 의존성 → 코드 스캔 → OWASP 체크
+6. **Documentation**: 대상 파악 → 생성 → 예제 → 검토
+7. **Onboarding**: 탐색 → 이해 → 설정 → 첫 기여
+8. **Performance Optimization**: 측정 → 분석 → 최적화 → 검증
+9. **Dependency Update**: 감사 → 계획 → 업데이트 → 테스트
+10. **API Design**: 설계 → 스펙 → 구현 → 문서
+11. **Database Migration**: 설계 → 계획 → 생성 → 테스트 → 실행
+12. **Release Management**: 동결 → 테스트 → 변경로그 → 태그 → 배포
 
 ---
 
@@ -174,8 +213,14 @@ architect (plan) → /run-tests (baseline) → refactorer → /run-tests (verify
 자세한 예제는 `examples/` 폴더를 참고하세요:
 
 - **prompts.md**: 효과적인 프롬프트 작성법
-- **workflows.md**: 개발 워크플로우 상세 가이드
+- **workflows.md**: 12개 개발 워크플로우 상세 가이드
 - **agent-selection-guide.md**: 에이전트 선택 가이드
+- **language-specific-guide.md**: 언어별 가이드 (TS, Python, Go, Rust)
+- **framework-specific-guide.md**: 프레임워크별 가이드 (React, Vue, Express, FastAPI)
+- **advanced-prompts.md**: 복잡한 작업을 위한 고급 프롬프트
+- **testing-strategy.md**: 테스트 전략 수립 가이드
+- **security-hardening.md**: 보안 강화 체크리스트
+- **common-mistakes.md**: 흔한 실수와 해결법
 
 ---
 
@@ -183,7 +228,7 @@ architect (plan) → /run-tests (baseline) → refactorer → /run-tests (verify
 
 ### 새 에이전트 추가
 
-`.claude/agents/my-agent.md`:
+`claude/agents/my-agent.md`:
 ```markdown
 ---
 name: my-agent
@@ -197,7 +242,7 @@ model: sonnet
 
 ### 새 스킬 추가
 
-`.claude/skills/my-skill/SKILL.md`:
+`claude/skills/my-skill/SKILL.md`:
 ```markdown
 ---
 name: my-skill
