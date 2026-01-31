@@ -1,0 +1,78 @@
+{
+    "$schema": "https://json.schemastore.org/claude-mcp.json",
+    "_comment": "MCP configuration for Gemini. Adjust paths and env vars as needed.",
+    "mcpServers": {
+        "filesystem": {
+            "_comment": "Filesystem access",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@anthropic/mcp-server-filesystem",
+                "/path/to/allowed/directory"
+            ]
+        },
+        "github": {
+            "_comment": "GitHub API",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@anthropic/mcp-server-github"
+            ],
+            "env": {
+                "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+            }
+        },
+        "git": {
+            "_comment": "Git history and branch management",
+            "command": "uvx",
+            "args": [
+                "mcp-server-git",
+                "--repository",
+                "."
+            ]
+        },
+        "postgres": {
+            "_comment": "PostgreSQL",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@anthropic/mcp-server-postgres"
+            ],
+            "env": {
+                "DATABASE_URL": "${DATABASE_URL}"
+            }
+        },
+        "sqlite": {
+            "_comment": "SQLite",
+            "command": "uvx",
+            "args": [
+                "mcp-server-sqlite",
+                "--db-path",
+                "./dev.db"
+            ]
+        },
+        "memory": {
+            "_comment": "Knowledge graph memory",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@anthropic/mcp-server-memory"
+            ]
+        },
+        "puppeteer": {
+            "_comment": "Browser automation",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@anthropic/mcp-server-puppeteer"
+            ]
+        },
+        "fetch": {
+            "_comment": "HTTP fetch",
+            "command": "uvx",
+            "args": [
+                "mcp-server-fetch"
+            ]
+        }
+    }
+}

@@ -1,22 +1,18 @@
-# Google Gemini Configuration
+# Gemini Code Configuration Examples
 
-Google Gemini AI를 위한 설정 및 프롬프트 예제입니다.
+This directory contains example workflows and configurations for Gemini Code.
 
-## Structure
+## Workflows (`/workflows`)
 
-```
-gemini/
-├── prompts/          # 시스템 프롬프트
-├── tools/            # 함수 호출 정의
-└── README.md
-```
+Custom workflows allow you to automate common tasks using the Gemini Agent. 
+To use these, copy the `.md` files into your project's `.agent/workflows/` directory.
 
-## Setup
+- **`boot.md`**: Bootstraps a new project with standard structure and git init.
+- **`review.md`**: Performs a code review on modified files.
+- **`docs.md`**: Updates project documentation based on the codebase.
 
-Google AI Studio에서 설정을 구성하세요:
-- https://aistudio.google.com/
+## Usage
 
-## API Reference
-
-- [Gemini API Documentation](https://ai.google.dev/docs)
-- [Function Calling](https://ai.google.dev/docs/function_calling)
+1. Create a `.agent/workflows` directory in your project root.
+2. Copy the desired workflow files into that directory.
+3. In Gemini Code, use the slash command (e.g., `/boot`, `/review`) to trigger the workflow.
