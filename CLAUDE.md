@@ -19,7 +19,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 ```
 .
 ├── claude/                 # Claude Code 설정
-│   ├── agents/            # 15개의 커스텀 서브에이전트
+│   ├── agents/            # 16개의 커스텀 서브에이전트
 │   ├── skills/            # 24개의 커스텀 스킬
 │   ├── settings.json      # 권한 및 환경 설정
 │   ├── mcp.json           # MCP 서버 설정
@@ -44,7 +44,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 
 ---
 
-## Agents (서브에이전트) - 15개
+## Agents (서브에이전트) - 16개
 
 ### 모델별 에이전트 분류
 
@@ -55,7 +55,8 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 | **sonnet** | `code-reviewer` | 코드 품질, 베스트 프랙티스 리뷰 |
 | **sonnet** | `debugger` | 에러 분석, 버그 수정 |
 | **sonnet** | `test-writer` | 테스트 코드 작성, 커버리지 개선 |
-| **sonnet** | `code-writer` | 기능 코드 구현, PRD/설계 기반 개발 |
+| **sonnet** | `frontend-developer` | 프론트엔드 구현 (UI, 상태관리, 스타일링) |
+| **sonnet** | `backend-developer` | 백엔드 구현 (API, 비즈니스 로직, DB 연동) |
 | **sonnet** | `refactorer` | 코드 리팩토링, 구조 개선 |
 | **sonnet** | `performance-optimizer` | 성능 분석, 최적화 제안 |
 | **sonnet** | `devops-specialist` | Docker, K8s, CI/CD |
@@ -70,7 +71,8 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 
 ```
 Use the architect agent to design the notification system
-Have the code-writer agent implement the feature based on PRD
+Have the frontend-developer agent implement the UI components
+Have the backend-developer agent implement the API endpoints
 Have the security-auditor agent review the auth module
 Ask the devops-specialist to set up CI/CD pipeline
 ```
