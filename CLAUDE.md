@@ -19,8 +19,8 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 ```
 .
 ├── claude/                 # Claude Code 설정
-│   ├── agents/            # 12개의 커스텀 서브에이전트
-│   ├── skills/            # 22개의 커스텀 스킬
+│   ├── agents/            # 13개의 커스텀 서브에이전트
+│   ├── skills/            # 23개의 커스텀 스킬
 │   ├── settings.json      # 권한 및 환경 설정
 │   ├── mcp.json           # MCP 서버 설정
 │   └── hooks.json         # 훅 설정
@@ -44,7 +44,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 
 ---
 
-## Agents (서브에이전트) - 12개
+## Agents (서브에이전트) - 13개
 
 ### 모델별 에이전트 분류
 
@@ -60,6 +60,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 | **sonnet** | `devops-specialist` | Docker, K8s, CI/CD |
 | **sonnet** | `api-designer` | REST/GraphQL API 설계 |
 | **sonnet** | `database-specialist` | 스키마 설계, 쿼리 최적화 |
+| **sonnet** | `claudemd-generator` | 세션 기반 CLAUDE.md 자동 생성 |
 | **haiku** | `doc-writer` | 문서화, README, API 문서 |
 | **haiku** | `dependency-manager` | 의존성 관리, 보안 업데이트 |
 
@@ -73,7 +74,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 
 ---
 
-## Skills (슬래시 커맨드) - 22개
+## Skills (슬래시 커맨드) - 23개
 
 ### Development Workflow
 
@@ -121,6 +122,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 | `/api-docs-generate` | `/api-docs-generate [path]` | OpenAPI 문서 생성 |
 | `/type-check-improve` | `/type-check-improve [path]` | 타입 커버리지 개선 |
 | `/create-testdata` | `/create-testdata <model> [count]` | 테스트 데이터 생성 |
+| `/generate-claudemd` | `/generate-claudemd [--full]` | 세션 기반 CLAUDE.md 생성 |
 
 ---
 
