@@ -136,10 +136,15 @@ Ask the devops-specialist to set up CI/CD pipeline
 
 ## Configuration Files
 
-### settings.json - 권한 설정
+### settings.json - 권한 및 출력 설정
 
 ```json
 {
+  "preferences": {
+    "verbosity": "minimal",
+    "codeOnly": true,
+    "maxExplanationLines": 3
+  },
   "permissions": {
     "allow": [
       "Bash(npm run *)",
@@ -154,6 +159,20 @@ Ask the devops-specialist to set up CI/CD pipeline
   }
 }
 ```
+
+#### preferences 옵션
+
+| 옵션 | 값 | 설명 |
+|------|-----|------|
+| `verbosity` | `"minimal"` \| `"normal"` \| `"detailed"` | 출력 상세도 |
+| `codeOnly` | `true` \| `false` | 코드만 출력, 설명 생략 |
+| `maxExplanationLines` | `number` | 설명 최대 줄 수 |
+
+**maxExplanationLines 권장값:**
+- `3`: 토큰 절약 최적화 (현재 설정)
+- `5`: 간결하면서 충분한 설명
+- `10`: 일반적인 사용
+- `0`: 설명 생략 (codeOnly: true와 동일 효과)
 
 ### mcp.json - MCP 서버 설정 (16개)
 
@@ -262,6 +281,26 @@ argument-hint: [arguments]
 
 스킬 프롬프트 내용...
 $ARGUMENTS
+```
+
+---
+
+## Output Rules
+
+settings.json의 preferences를 따르세요:
+
+- **verbosity: minimal** - 간결하게 출력
+- **codeOnly: true** - 코드 위주, 불필요한 설명 생략
+- **maxExplanationLines: 3** - 설명은 최대 3줄
+
+```
+# 좋은 예
+Fix applied.
+
+# 나쁜 예
+이 버그는 상태 관리 문제로 인해 발생했습니다.
+React의 useState 훅이 비동기적으로 동작하기 때문에...
+(장황한 설명 계속)
 ```
 
 ---
