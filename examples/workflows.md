@@ -8,48 +8,74 @@ Claude Code를 활용한 일반적인 개발 워크플로우 가이드입니다.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  1. Plan        → architect 에이전트로 설계                   │
-│  2. Implement   → /new-feature 스킬로 구현                   │
-│  3. Test        → test-writer 에이전트로 테스트 작성          │
-│  4. Review      → code-reviewer 에이전트로 리뷰              │
-│  5. Document    → doc-writer 에이전트로 문서화               │
-│  6. Ship        → /commit, /review-pr로 배포 준비            │
+│  1. Spec        → spec-writer로 기획서(PRD) 작성             │
+│  2. Design      → architect 에이전트로 시스템 설계            │
+│  3. API Design  → api-designer로 API 설계                   │
+│  4. Backend     → backend-developer로 서버 구현             │
+│  5. Frontend    → frontend-developer로 UI 구현              │
+│  6. Test        → test-writer 에이전트로 테스트 작성          │
+│  7. Review      → code-reviewer 에이전트로 리뷰              │
+│  8. Document    → doc-writer 에이전트로 문서화               │
+│  9. Ship        → /commit, /review-pr로 배포 준비            │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Step 1: Planning
+### Step 1: Specification (PRD)
 ```
-Use the architect agent to design the user notification feature.
+Use the spec-writer agent to write a PRD for the user notification feature.
 Requirements:
 - Real-time notifications via WebSocket
 - Email fallback for offline users
 - Notification preferences per user
 ```
 
-### Step 2: Implementation
+### Step 2: System Design
 ```
-/new-feature notification system based on the architect's design
+Use the architect agent to design the notification system
+based on docs/specs/notification-prd.md
 ```
 
-### Step 3: Testing
+### Step 3: API Design
+```
+Use the api-designer agent to design notification API endpoints
+including WebSocket events and REST endpoints
+```
+
+### Step 4: Backend Implementation
+```
+Use the backend-developer agent to implement:
+- NotificationService with WebSocket support
+- Email notification fallback
+- User preference storage
+```
+
+### Step 5: Frontend Implementation
+```
+Use the frontend-developer agent to implement:
+- NotificationBell component
+- NotificationList with real-time updates
+- NotificationPreferences settings page
+```
+
+### Step 6: Testing
 ```
 Use the test-writer agent to add comprehensive tests for:
-- NotificationService
-- WebSocket connection handling
-- Email sending logic
+- NotificationService unit tests
+- WebSocket integration tests
+- Frontend component tests
 ```
 
-### Step 4: Review
+### Step 7: Review
 ```
 Use the code-reviewer agent to review all notification-related changes
 ```
 
-### Step 5: Documentation
+### Step 8: Documentation
 ```
 Use the doc-writer agent to document the notification API
 ```
 
-### Step 6: Ship
+### Step 9: Ship
 ```
 /commit feat(notifications): add real-time notification system
 /review-pr
@@ -536,6 +562,179 @@ Deploy to production via CI/CD
 
 ---
 
+## 13. Script/Automation Workflow
+
+스크립트, CLI 도구, 봇 등을 개발할 때의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Define      → 요구사항 정의                               │
+│  2. Design      → 입출력, 옵션 설계                           │
+│  3. Implement   → general-developer로 구현                   │
+│  4. Test        → 테스트 및 엣지 케이스 확인                   │
+│  5. Document    → 사용법 문서화                               │
+│  6. Deploy      → 실행 환경에 배포                            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example: Data Migration Script
+```
+# Step 1: Define Requirements
+Migrate user data from legacy MySQL to new PostgreSQL database
+- Handle data transformation
+- Support incremental migration
+- Provide rollback capability
+
+# Step 2: Design
+Use the general-developer agent to design:
+- CLI interface with --source, --target, --batch-size options
+- Progress reporting
+- Error handling and logging
+
+# Step 3: Implement
+Use the general-developer agent to create:
+- migration/migrate_users.py script
+- Configuration handling
+- Database connection management
+
+# Step 4: Test
+Test with sample data:
+- Empty dataset
+- Large dataset (1M+ records)
+- Data with special characters
+
+# Step 5: Document
+Use the doc-writer agent to create README with:
+- Installation instructions
+- Usage examples
+- Configuration options
+
+# Step 6: Deploy
+Deploy to scheduled job or run manually
+```
+
+### Example: Slack Bot
+```
+# Step 1: Define
+Create a Slack bot for daily standup reminders
+
+# Step 2-3: Design & Implement
+Use the general-developer agent to create a Slack bot that:
+- Posts daily standup reminders at 9 AM
+- Collects responses via threads
+- Summarizes standup results
+
+# Step 4-6: Test, Document, Deploy
+Test in staging workspace, document setup, deploy to production
+```
+
+---
+
+## 14. Infrastructure Setup Workflow
+
+인프라 및 CI/CD를 설정할 때의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Requirements → 인프라 요구사항 정의                        │
+│  2. Design       → architect로 인프라 아키텍처 설계            │
+│  3. Containers   → devops-specialist로 Docker 설정           │
+│  4. CI/CD        → devops-specialist로 파이프라인 설정        │
+│  5. IaC          → devops-specialist로 인프라 코드화          │
+│  6. Test         → 스테이징 환경에서 테스트                    │
+│  7. Document     → 운영 문서 작성                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example: Kubernetes Deployment
+```
+# Step 1: Requirements
+- Multi-environment support (dev, staging, prod)
+- Auto-scaling based on CPU/memory
+- Zero-downtime deployments
+- Secret management
+
+# Step 2: Infrastructure Design
+Use the architect agent to design:
+- Kubernetes cluster architecture
+- Service mesh requirements
+- Monitoring and logging stack
+
+# Step 3: Containerization
+Use the devops-specialist agent to create:
+- Dockerfile with multi-stage build
+- docker-compose.yml for local development
+- Container security best practices
+
+# Step 4: CI/CD Pipeline
+Use the devops-specialist agent to set up:
+- GitHub Actions for build and test
+- Automated deployment to staging
+- Manual approval for production
+
+# Step 5: Infrastructure as Code
+Use the devops-specialist agent to create:
+- Kubernetes manifests (Deployment, Service, Ingress)
+- Helm charts for configuration
+- Terraform for cloud resources
+
+# Step 6: Test
+- Deploy to staging environment
+- Run integration tests
+- Verify auto-scaling
+
+# Step 7: Document
+Use the doc-writer agent to create:
+- Deployment runbook
+- Troubleshooting guide
+- Architecture diagrams
+```
+
+---
+
+## 15. Project Setup Workflow
+
+새 프로젝트의 CLAUDE.md를 생성하고 설정할 때의 워크플로우입니다.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  1. Explore     → 프로젝트 구조 파악                          │
+│  2. Discuss     → 프로젝트 컨벤션 논의                        │
+│  3. Generate    → claudemd-generator로 CLAUDE.md 생성       │
+│  4. Review      → 생성된 내용 검토 및 수정                    │
+│  5. Commit      → 저장소에 커밋                               │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Example
+```
+# Step 1: Explore Project
+/search-code project structure
+What frameworks and tools does this project use?
+
+# Step 2: Discuss Conventions
+Let's establish:
+- Code style guidelines
+- Git commit conventions
+- Testing requirements
+- Deployment process
+
+# Step 3: Generate CLAUDE.md
+Use the claudemd-generator agent to create CLAUDE.md
+based on our discussion and project analysis
+
+# Step 4: Review
+Review the generated CLAUDE.md:
+- Verify accuracy of project description
+- Check conventions match team agreements
+- Ensure all important patterns are documented
+
+# Step 5: Commit
+/commit docs: add CLAUDE.md for AI assistant context
+```
+
+---
+
 ## Workflow Selection Guide
 
 | 상황 | 권장 워크플로우 |
@@ -546,9 +745,12 @@ Deploy to production via CI/CD
 | 코드 개선 | Refactoring (#4) |
 | 보안 점검 | Security Audit (#5) |
 | 문서 작성 | Documentation (#6) |
-| 새 프로젝트 | Onboarding (#7) |
+| 새 프로젝트 참여 | Onboarding (#7) |
 | 속도 개선 | Performance Optimization (#8) |
 | 패키지 업데이트 | Dependency Update (#9) |
 | API 개발 | API Design (#10) |
 | DB 변경 | Database Migration (#11) |
 | 버전 배포 | Release Management (#12) |
+| 스크립트/CLI/봇 | Script/Automation (#13) |
+| 인프라/CI/CD | Infrastructure Setup (#14) |
+| CLAUDE.md 생성 | Project Setup (#15) |
