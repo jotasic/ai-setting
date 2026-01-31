@@ -74,7 +74,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 Use the architect agent to design the notification system
 Have the frontend-developer agent implement the UI components
 Have the backend-developer agent implement the API endpoints
-Have the general-developer agent create a Telegram bot for alerts
+Have the general-developer agent create a data migration script
 Have the security-auditor agent review the auth module
 Ask the devops-specialist to set up CI/CD pipeline
 ```
