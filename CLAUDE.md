@@ -19,7 +19,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 ```
 .
 ├── claude/                 # Claude Code 설정
-│   ├── agents/            # 14개의 커스텀 서브에이전트
+│   ├── agents/            # 15개의 커스텀 서브에이전트
 │   ├── skills/            # 24개의 커스텀 스킬
 │   ├── settings.json      # 권한 및 환경 설정
 │   ├── mcp.json           # MCP 서버 설정
@@ -44,7 +44,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 
 ---
 
-## Agents (서브에이전트) - 14개
+## Agents (서브에이전트) - 15개
 
 ### 모델별 에이전트 분류
 
@@ -55,13 +55,14 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 | **sonnet** | `code-reviewer` | 코드 품질, 베스트 프랙티스 리뷰 |
 | **sonnet** | `debugger` | 에러 분석, 버그 수정 |
 | **sonnet** | `test-writer` | 테스트 코드 작성, 커버리지 개선 |
+| **sonnet** | `code-writer` | 기능 코드 구현, PRD/설계 기반 개발 |
 | **sonnet** | `refactorer` | 코드 리팩토링, 구조 개선 |
 | **sonnet** | `performance-optimizer` | 성능 분석, 최적화 제안 |
 | **sonnet** | `devops-specialist` | Docker, K8s, CI/CD |
 | **sonnet** | `api-designer` | REST/GraphQL API 설계 |
 | **sonnet** | `database-specialist` | 스키마 설계, 쿼리 최적화 |
 | **sonnet** | `claudemd-generator` | 세션 기반 CLAUDE.md 자동 생성 |
-| **sonnet** | `spec-writer` | 기획서/기술 스펙 작성, 요구사항 문서화 |
+| **sonnet** | `spec-writer` | 기획서(PRD) 작성 (기술 구현은 architect가 담당) |
 | **haiku** | `doc-writer` | 문서화, README, API 문서 |
 | **haiku** | `dependency-manager` | 의존성 관리, 보안 업데이트 |
 
@@ -69,6 +70,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 
 ```
 Use the architect agent to design the notification system
+Have the code-writer agent implement the feature based on PRD
 Have the security-auditor agent review the auth module
 Ask the devops-specialist to set up CI/CD pipeline
 ```
@@ -124,7 +126,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 | `/type-check-improve` | `/type-check-improve [path]` | 타입 커버리지 개선 |
 | `/create-testdata` | `/create-testdata <model> [count]` | 테스트 데이터 생성 |
 | `/generate-claudemd` | `/generate-claudemd [--full]` | 세션 기반 CLAUDE.md 생성 |
-| `/write-spec` | `/write-spec <feature>` | 기획서/기술 스펙 문서 생성 |
+| `/write-spec` | `/write-spec <feature>` | 기획서(PRD) 생성, architect가 기술 설계 |
 
 ---
 

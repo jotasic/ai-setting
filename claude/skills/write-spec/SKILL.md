@@ -1,196 +1,157 @@
 ---
 name: write-spec
-description: 사용자 요구사항을 기획서, 기술 스펙, CLAUDE.md로 변환하여 다른 에이전트가 구현할 수 있도록 문서화
-argument-hint: <feature-description> [--prd-only] [--tech-only] [--update-claude]
+description: 사용자 요구사항을 기획서(PRD)로 변환. 기술적 구현은 architect 에이전트가 담당
+argument-hint: <feature-description>
 ---
 
-# Write Specification
+# Write Specification (PRD)
 
-사용자의 요구사항을 분석하여 기획서(PRD)와 기술 스펙을 생성하고, CLAUDE.md를 업데이트합니다.
+사용자의 요구사항을 분석하여 기획서(PRD)를 생성합니다.
+기술적 설계와 구현은 다른 에이전트(architect 등)가 담당합니다.
 
 ## Arguments
 
-- `$ARGUMENTS`:
-  - `<feature-description>`: 구현하려는 기능 설명 (필수)
-  - `--prd-only`: 기획서만 생성
-  - `--tech-only`: 기술 스펙만 생성
-  - `--update-claude`: CLAUDE.md만 업데이트
-  - `--output <dir>`: 출력 디렉토리 지정 (기본: docs/specs/)
+- `$ARGUMENTS`: 구현하려는 기능 설명 (필수)
 
 ## Workflow
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  1. Analyze     → 요구사항 분석 및 질문                       │
-│  2. Explore     → 프로젝트 구조 파악                         │
-│  3. Draft PRD   → 기획서 초안 작성                          │
-│  4. Draft Tech  → 기술 스펙 초안 작성                        │
-│  5. Update      → CLAUDE.md 업데이트                        │
-│  6. Review      → 문서 검토 및 확인 요청                      │
+│  1. Analyze     → 요구사항 분석                              │
+│  2. Clarify     → 불명확한 부분 질문                         │
+│  3. Write PRD   → 기획서 작성                               │
+│  4. Handoff     → architect 에이전트로 전달 안내             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Output Files
+## Output
 
-### 1. 기획서 (PRD)
+### 기획서 (PRD)
 `docs/specs/{feature-name}-prd.md`
 
 ```markdown
-# {Feature} 기획서
+# {Feature} 기획서 (PRD)
 
-## 개요
-## 기능 요구사항
-## 사용자 시나리오
-## 비기능 요구사항
-## 제약사항
-## 성공 지표
+## 1. 개요
+- 배경, 목적, 대상 사용자, 기대 효과
+
+## 2. 기능 요구사항
+- 필수 기능 (Must Have) - P0
+- 권장 기능 (Should Have) - P1
+- 선택 기능 (Nice to Have) - P2
+
+## 3. 사용자 시나리오
+- 시나리오별 사용자 여정
+
+## 4. 비기능 요구사항
+- 성능, 보안, 사용성, 확장성 기대치
+
+## 5. 제약사항
+- 비즈니스/시스템 제약
+
+## 6. 성공 지표 (KPI)
+
+## 7. 범위 외 (Out of Scope)
+
+## 8. 다음 단계
+- architect 에이전트에게 전달 안내
 ```
 
-### 2. 기술 스펙
-`docs/specs/{feature-name}-tech-spec.md`
+## What This Skill Does
 
-```markdown
-# {Feature} 기술 스펙
+- ✅ 비즈니스 요구사항 정의
+- ✅ 사용자 시나리오 작성
+- ✅ 기능 목록 및 우선순위
+- ✅ 성공 지표 정의
+- ✅ 제약사항 명시
 
-## 아키텍처
-## 데이터 모델
-## API 설계
-## 구현 계획
-## 테스트 계획
-## 에이전트 가이드
-```
+## What This Skill Does NOT Do
 
-### 3. CLAUDE.md 업데이트
-
-```markdown
-## Current Feature: {Feature}
-
-### Overview
-### Implementation Status
-### Key Files
-### Conventions
-### Agent Instructions
-```
+- ❌ 아키텍처 설계 → `architect` 에이전트
+- ❌ API 설계 → `api-designer` 에이전트
+- ❌ DB 스키마 → `database-specialist` 에이전트
+- ❌ 기술 스택 결정 → `architect` 에이전트
+- ❌ 코드 작성 → 구현 에이전트
 
 ## Examples
 
 ### 기본 사용
 ```
-/write-spec 사용자 알림 시스템 - 이메일과 푸시 알림 지원, 알림 설정 관리
+/write-spec 사용자 알림 시스템 - 이메일, 푸시 알림 지원, 알림 설정 관리
 ```
 
-### 기획서만 생성
+### 상세 요구사항
 ```
-/write-spec 결제 시스템 통합 --prd-only
-```
-
-### 기술 스펙만 생성
-```
-/write-spec API 레이트 리미팅 --tech-only
-```
-
-### CLAUDE.md만 업데이트
-```
-/write-spec 현재 작업 중인 검색 기능 --update-claude
+/write-spec 결제 시스템:
+- 신용카드, 계좌이체 지원
+- 정기 결제 기능
+- 영수증 발행
+- 환불 처리
 ```
 
-### 커스텀 출력 경로
+### 간단한 기능
 ```
-/write-spec 대시보드 기능 --output design/
+/write-spec 사용자 프로필 페이지 - 프로필 사진, 이름, 소개글 수정
 ```
+
+## After PRD is Created
+
+기획서 작성 완료 후 다음 단계:
+
+```
+기획서가 완성되었습니다: docs/specs/{feature}-prd.md
+
+다음 단계로 architect 에이전트에게 시스템 설계를 요청하세요:
+
+┌─────────────────────────────────────────────────────────────┐
+│  Use the architect agent to design the system architecture  │
+│  based on docs/specs/{feature}-prd.md                       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Full Development Flow
+
+```
+사용자 요구사항
+     │
+     ▼
+/write-spec (기획서 작성)
+     │
+     │  📄 docs/specs/{feature}-prd.md
+     │
+     ▼
+architect 에이전트 (시스템 설계)
+     │
+     │  📄 기술 스펙, 아키텍처 문서
+     │
+     ├──▶ api-designer (API 설계)
+     ├──▶ database-specialist (DB 설계)
+     │
+     ▼
+구현 에이전트들
+     │
+     ├──▶ test-writer (테스트)
+     ├──▶ code-reviewer (리뷰)
+     │
+     ▼
+완료
+```
+
+## Tips
+
+1. **구체적으로 설명**: "알림 기능" 보다 "이메일/푸시 알림, 사용자 설정 관리"
+2. **비즈니스 목표 포함**: 왜 필요한지 설명
+3. **대상 사용자 명시**: 누가 사용하는지
+4. **제약사항 언급**: 일정, 예산, 기존 시스템 등
 
 ## Integration with spec-writer Agent
 
-더 상세한 문서가 필요한 경우:
+더 상세한 기획이 필요한 경우 에이전트 직접 호출:
 
 ```
-Use the spec-writer agent to create comprehensive documentation for:
-- User authentication with OAuth2
+Use the spec-writer agent to create a detailed PRD for:
+- User authentication system
+- Social login (Google, GitHub)
 - Password reset flow
-- Session management
-
-Include:
-- Detailed user journeys
-- Security considerations
-- API contracts
-- Database schema
+- Remember me functionality
 ```
-
-## Document Structure
-
-생성되는 문서의 전체 구조:
-
-```
-project/
-├── docs/
-│   └── specs/
-│       ├── {feature}-prd.md          # 기획서
-│       ├── {feature}-tech-spec.md    # 기술 스펙
-│       └── README.md                 # 스펙 인덱스 (자동 업데이트)
-├── CLAUDE.md                         # 프로젝트 컨텍스트
-└── ...
-```
-
-## For Other Agents
-
-생성된 문서를 다른 에이전트가 활용하는 방법:
-
-```markdown
-## Agent Instructions (in CLAUDE.md)
-
-### architect
-- PRD의 "아키텍처" 섹션 참조
-- 기술 스펙의 컴포넌트 다이어그램 기반 설계
-
-### api-designer
-- 기술 스펙의 "API 설계" 섹션 확장
-- PRD의 기능 요구사항 반영
-
-### database-specialist
-- 기술 스펙의 "데이터 모델" 섹션 기반 스키마 설계
-- PRD의 비기능 요구사항(성능) 고려
-
-### test-writer
-- 기술 스펙의 "테스트 계획" 따르기
-- PRD의 사용자 시나리오 기반 E2E 테스트
-
-### code-reviewer
-- PRD의 제약사항 확인
-- 기술 스펙의 컨벤션 준수 검토
-```
-
-## Quick Templates
-
-### Simple Feature
-```
-/write-spec 간단한 CRUD 기능 - 사용자 프로필 관리
-```
-
-### Complex System
-```
-/write-spec 복잡한 시스템:
-- 실시간 채팅 기능
-- 메시지 저장 및 검색
-- 읽음 표시
-- 타이핑 인디케이터
-- 파일 첨부
-```
-
-### API Integration
-```
-/write-spec 외부 API 연동:
-- Stripe 결제 통합
-- 웹훅 처리
-- 에러 핸들링
-- 재시도 로직
-```
-
-## Post-Generation Steps
-
-문서 생성 후 권장 워크플로우:
-
-1. **검토**: 생성된 문서 확인 및 수정
-2. **설계**: `architect` 에이전트로 아키텍처 검토
-3. **구현**: 기술 스펙의 구현 계획 따라 진행
-4. **테스트**: `test-writer`로 테스트 작성
-5. **리뷰**: `code-reviewer`로 코드 검토
