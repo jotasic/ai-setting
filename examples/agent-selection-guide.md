@@ -454,6 +454,163 @@ Use the security-auditor agent to verify the fixes
 
 ---
 
+## Agent Chaining (에이전트 연계)
+
+여러 에이전트를 순차적으로 사용하여 복잡한 작업을 처리하는 방법입니다.
+
+### 연계 패턴
+
+#### 패턴 1: 분석 → 구현
+
+```
+# 1단계: 분석
+Use the debugger agent to analyze the memory leak issue
+in the image processing service.
+Identify the root cause but don't fix it yet.
+
+# 2단계: 구현 (분석 결과 확인 후)
+Use the backend-developer agent to fix the memory leak.
+Based on the debugger's analysis, the issue is unclosed
+file handles in src/services/imageProcessor.ts.
+Implement proper resource cleanup.
+```
+
+#### 패턴 2: 설계 → 구현
+
+```
+# 1단계: API 설계
+Use the api-designer agent to design the user profile API
+with endpoints for CRUD operations and avatar upload.
+
+# 2단계: 백엔드 구현
+Use the backend-developer agent to implement the user profile API
+based on the api-designer's specification.
+
+# 3단계: 프론트엔드 구현
+Use the frontend-developer agent to implement the profile page
+that consumes the user profile API.
+```
+
+#### 패턴 3: 한 번에 연계 지정
+
+```
+First, use the debugger agent to analyze why the checkout
+fails for orders over $10,000. Only analyze, don't fix.
+
+Then, based on the analysis, use the backend-developer agent
+to implement the fix.
+
+Finally, use the test-writer agent to add regression tests
+for the fixed functionality.
+```
+
+### 일반적인 연계 조합
+
+| 시나리오 | 에이전트 연계 |
+|----------|--------------|
+| 버그 수정 | debugger → backend/frontend-developer → test-writer |
+| 새 기능 | spec-writer → architect → api-designer → backend → frontend |
+| 성능 개선 | performance-optimizer → backend-developer → test-writer |
+| 보안 수정 | security-auditor → debugger → backend-developer |
+| 리팩토링 | code-reviewer → refactorer → test-writer |
+| DB 변경 | database-specialist → backend-developer → test-writer |
+
+### 연계 예시: 버그 수정 전체 흐름
+
+```
+# Step 1: 버그 분석 (분석만)
+Use the debugger agent to investigate the payment timeout issue.
+Users report that payments fail after 30 seconds.
+Analyze the root cause and report findings, don't fix yet.
+
+# Step 2: 분석 결과 확인
+# → debugger가 "외부 API 타임아웃 설정이 10초로 되어 있어
+#    대용량 결제 시 실패함" 이라고 보고
+
+# Step 3: 수정 구현
+Use the backend-developer agent to fix the payment timeout.
+According to the debugger's analysis:
+- Issue: External payment API timeout is 10s
+- Location: src/services/payment/client.ts
+- Solution: Increase timeout and add retry logic
+
+# Step 4: 테스트 추가
+Use the test-writer agent to add tests for the payment timeout fix:
+- Test normal payment flow
+- Test timeout handling
+- Test retry logic with mock slow responses
+
+# Step 5: 코드 리뷰
+Use the code-reviewer agent to review the payment timeout fix
+ensuring proper error handling and logging.
+```
+
+### 연계 예시: 새 API 개발
+
+```
+# Step 1: 기획서 작성
+Use the spec-writer agent to write a PRD for the subscription
+management feature with billing cycles and plan upgrades.
+
+# Step 2: 시스템 설계
+Use the architect agent to design the subscription system
+based on docs/specs/subscription-prd.md
+
+# Step 3: DB 스키마 설계
+Use the database-specialist agent to design the schema for
+subscriptions, plans, and billing history tables.
+
+# Step 4: API 설계
+Use the api-designer agent to design subscription API endpoints
+including webhooks for billing events.
+
+# Step 5: 백엔드 구현
+Use the backend-developer agent to implement:
+- SubscriptionService
+- BillingService
+- Webhook handlers
+
+# Step 6: 프론트엔드 구현
+Use the frontend-developer agent to implement:
+- PricingPage component
+- SubscriptionManagement dashboard
+- BillingHistory view
+```
+
+### 연계 예시: 스크립트 + 인프라
+
+```
+# Step 1: 마이그레이션 스크립트 작성
+Use the general-developer agent to create a data migration
+script from MongoDB to PostgreSQL with progress reporting.
+
+# Step 2: Docker 설정
+Use the devops-specialist agent to create a Docker container
+for running the migration script with proper environment setup.
+
+# Step 3: 문서화
+Use the doc-writer agent to document the migration process
+including rollback procedures.
+```
+
+### 팁: 연계 시 컨텍스트 전달
+
+이전 에이전트의 결과를 다음 에이전트에게 명시적으로 전달하세요:
+
+```
+# 좋은 예 - 이전 결과 참조
+Use the backend-developer agent to fix the issue.
+According to the debugger's analysis:
+- Root cause: Race condition in order processing
+- Affected file: src/services/order.ts lines 45-67
+- Suggested fix: Add mutex lock
+
+# 나쁜 예 - 컨텍스트 없음
+Use the backend-developer agent to fix the bug.
+```
+
+---
+
 ## Anti-Patterns
 
 ### 피해야 할 것들
