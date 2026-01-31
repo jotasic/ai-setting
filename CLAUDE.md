@@ -81,7 +81,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 
 ---
 
-## Skills (슬래시 커맨드) - 24개
+## Skills (슬래시 커맨드) - 25개
 
 ### Development Workflow
 
@@ -99,6 +99,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 
 | Skill | Usage | Description |
 |-------|-------|-------------|
+| `/full-dev` | `/full-dev <feature>` | 기획→설계→구현→테스트→문서화 전체 플로우 |
 | `/new-feature` | `/new-feature [desc]` | 새 기능 구현 |
 | `/fix-issue` | `/fix-issue [number]` | GitHub 이슈 수정 |
 | `/review-pr` | `/review-pr` | PR 리뷰 |
