@@ -3,7 +3,7 @@ name: architect
 description: 시스템 설계와 아키텍처를 담당하는 전문가. 새 기능 설계나 구조적 결정이 필요할 때 사용하세요.
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit
-model: sonnet
+model: opus
 permissionMode: default
 ---
 
