@@ -38,7 +38,16 @@ category: documentation
 | Language | Command |
 |----------|---------|
 | TypeScript | `npx tsc --noEmit` |
-| Python | `mypy .` / `pyright` |
+| Python | `mypy .` / `pyright` / `ruff check --select=ANN` |
+
+## Lint Commands (Pre-defined)
+
+| Language | Tool | Command |
+|----------|------|---------|
+| Python | ruff | `ruff check .` |
+| Python | ruff (fix) | `ruff check --fix .` |
+| TypeScript | eslint | `npx eslint --ext .ts,.tsx .` |
+| Go | golangci-lint | `golangci-lint run` |
 
 ## Agent Integration
 

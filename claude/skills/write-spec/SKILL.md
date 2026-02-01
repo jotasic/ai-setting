@@ -3,7 +3,7 @@ name: write-spec
 description: 사용자 요구사항을 기획서(PRD)로 변환
 argument-hint: <feature-description>
 allowed-tools: Read, Write, Grep, Glob
-model: sonnet
+model: opus
 category: documentation
 ---
 

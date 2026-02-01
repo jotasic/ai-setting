@@ -3,7 +3,7 @@ name: architecture-review
 description: 현재 시스템 아키텍처 분석 및 리뷰
 argument-hint: [area] [--deep]
 allowed-tools: Read, Grep, Glob, Bash
-model: sonnet
+model: opus
 category: understanding
 ---
 

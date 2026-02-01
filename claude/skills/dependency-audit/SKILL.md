@@ -3,7 +3,7 @@ name: dependency-audit
 description: 의존성 보안 및 호환성 검사
 argument-hint: [--fix] [--report]
 allowed-tools: Bash, Read, Grep
-model: haiku
+model: opus
 category: infrastructure
 ---
 

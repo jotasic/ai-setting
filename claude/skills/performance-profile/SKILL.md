@@ -3,7 +3,7 @@ name: performance-profile
 description: 성능 프로파일링 및 벤치마크 실행
 argument-hint: [target] [--report]
 allowed-tools: Bash, Read, Grep, Glob
-model: sonnet
+model: opus
 category: infrastructure
 ---
 
