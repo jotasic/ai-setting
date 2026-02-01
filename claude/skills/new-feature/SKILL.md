@@ -1,13 +1,21 @@
 ---
 name: new-feature
 description: 새로운 기능을 구현합니다
-argument-hint: [feature description]
+argument-hint: <feature description>
 allowed-tools: Read, Edit, Write, Bash, Grep, Glob
+model: sonnet
+category: development
 ---
 
 # Implement New Feature
 
 새로운 기능을 체계적으로 구현합니다.
+
+## Triggers (사용 조건)
+
+- "새 기능 만들어줘", "feature 구현"
+- "기능 추가해줘"
+- 단일 기능 구현 요청 시 (전체 플로우는 `/full-dev` 사용)
 
 ## Arguments
 
@@ -15,47 +23,45 @@ allowed-tools: Read, Edit, Write, Bash, Grep, Glob
 
 ## Workflow
 
-### 1. Requirements Analysis
-
-- 기능 요구사항 파악
-- 기존 코드베이스 분석
-- 영향 범위 확인
-
-### 2. Design
-
-- 구현 방식 결정
-- 파일 구조 계획
-- API/인터페이스 설계
-
-### 3. Implementation
-
 ```
 ┌─────────────────────────────────────┐
-│  1. Create feature branch           │
-│  2. Implement core logic            │
-│  3. Add error handling              │
+│  1. Analyze requirements            │
+│  2. Design implementation           │
+│  3. Implement with agent            │
 │  4. Write tests                     │
-│  5. Update documentation            │
+│  5. Verify & cleanup                │
 └─────────────────────────────────────┘
 ```
 
-### 4. Verification
+## Agent Integration
 
-- 단위 테스트 실행
-- 통합 테스트 실행
-- 수동 테스트
+구현 대상에 따라 적절한 에이전트 호출:
 
-### 5. Cleanup
+**프론트엔드 기능:**
+```
+Use the frontend-developer agent to implement [feature] UI component
+```
 
-- 코드 리뷰 준비
-- 불필요한 코드 제거
-- 린트/포맷팅 확인
+**백엔드 기능:**
+```
+Use the backend-developer agent to implement [feature] API endpoint
+```
 
-## Output
+**유틸리티/스크립트:**
+```
+Use the general-developer agent to implement [feature] utility
+```
+
+**테스트 작성:**
+```
+Use the test-writer agent to write tests for [feature]
+```
+
+## Output Format
 
 ```
 Feature: [feature name]
-
+═══════════════════════════════════════
 Files Created:
   - [file path]
 
@@ -68,10 +74,19 @@ Tests Added:
 Next Steps:
   - [ ] Code review
   - [ ] Merge to main
+═══════════════════════════════════════
 ```
 
-## Guidelines
+## Examples
 
-- 작은 단위로 커밋
-- 테스트 먼저 작성 (TDD) 고려
-- 기존 패턴과 일관성 유지
+```bash
+/new-feature 사용자 프로필 이미지 업로드
+/new-feature 다크모드 토글 버튼
+/new-feature 결제 내역 조회 API
+```
+
+## Related Skills
+
+- `/full-dev`: 기획부터 문서화까지 전체 플로우
+- `/fix-issue`: 버그 수정
+- `/run-tests`: 테스트 실행
