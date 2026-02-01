@@ -2,62 +2,36 @@
 name: fix-issue
 description: GitHub 이슈를 분석하고 수정 사항을 구현합니다
 argument-hint: [issue-number]
-allowed-tools: Read, Edit, Write, Bash, Grep, Glob, Task
-model: sonnet
+allowed-tools: Task, Bash
+model: haiku
 category: development
-context: fork
 ---
 
 # Fix GitHub Issue
 
-## Triggers (사용 조건)
+## ⚡ 즉시 실행
 
-- "이슈 수정해줘", "fix issue"
-- "버그 수정", "fix bug #123"
-- GitHub 이슈 번호 언급시
-
-## Issue Information
-
-Issue to fix: $ARGUMENTS
-
-## Workflow
-
-### 1. Fetch Issue Details
-
+**1. 이슈 정보 조회:**
 ```bash
 gh issue view $ARGUMENTS
 ```
 
-### 2. Analyze the Issue
+**2. 디버거 에이전트 호출:**
+```
+Use the debugger agent to analyze and fix issue #$ARGUMENTS
+```
 
-- What is the expected behavior?
-- What is the actual behavior?
-- Are there reproduction steps?
-- Any related issues or PRs?
+## 에이전트 완료 후
 
-### 3. Locate Relevant Code
+수정 완료 시 사용자에게 안내:
 
-Search for:
-- Files mentioned in the issue
-- Error messages or stack traces
-- Related functionality
+```
+이슈 수정 완료.
+- /run-tests 로 테스트 확인
+- /commit 으로 커밋
+```
 
-### 4. Implement Fix
+## Related Skills
 
-- Make minimal, targeted changes
-- Follow existing code patterns
-- Add tests if applicable
-
-### 5. Verify
-
-- Run existing tests
-- Test the specific scenario from the issue
-- Check for regressions
-
-## Output
-
-Provide:
-1. Summary of changes made
-2. Files modified
-3. How to test the fix
-4. Any follow-up items
+- `/run-tests`: 테스트 실행
+- `/commit`: 커밋 생성

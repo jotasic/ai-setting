@@ -2,8 +2,8 @@
 name: full-dev
 description: 요구사항부터 개발 완료까지 전체 플로우 실행
 argument-hint: <feature-description>
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
-model: sonnet
+allowed-tools: Task
+model: haiku
 category: workflow
 ---
 
@@ -11,15 +11,37 @@ category: workflow
 
 요구사항: $ARGUMENTS
 
-## Triggers (사용 조건)
+## ⚡ 즉시 실행 - Phase 1부터 순차 진행
 
-- "전체 개발해줘", "full development"
-- "기획부터 구현까지", "end to end"
-- 새 기능 전체 플로우 필요시
+**Phase 1: 기획** (즉시 시작)
+```
+Use the spec-writer agent to create PRD for: $ARGUMENTS
+```
 
-## 실행 플로우
+PRD 완료 후 → Phase 2 진행
 
-다음 순서대로 에이전트를 호출하여 전체 개발을 완료하세요:
+**Phase 2: 설계**
+```
+Use the architect agent to design system based on the PRD
+```
+
+설계 완료 후 → Phase 3 진행
+
+**Phase 3: 구현** (프로젝트 타입에 따라 선택)
+```
+Use the backend-developer agent to implement the backend
+Use the frontend-developer agent to implement the frontend
+```
+
+구현 완료 후 → Phase 4 진행
+
+**Phase 4: 품질**
+```
+Use the test-writer agent to write tests
+Use the code-reviewer agent to review the code
+```
+
+## 전체 플로우 요약
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐

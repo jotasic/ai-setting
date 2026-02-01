@@ -2,84 +2,49 @@
 name: new-feature
 description: 새로운 기능을 구현합니다
 argument-hint: [feature description]
-allowed-tools: Read, Edit, Write, Bash, Grep, Glob, Task
-model: sonnet
+allowed-tools: Task, Bash, Read
+model: haiku
 category: development
 ---
 
 # Implement New Feature
 
-새로운 기능을 체계적으로 구현합니다.
+## ⚡ 즉시 실행
 
-## Triggers (사용 조건)
+**프로젝트 타입 확인 후 적절한 에이전트 호출:**
 
-- "기능 구현해줘", "implement feature"
-- "새 기능 추가", "add feature"
-- 설계 없이 바로 구현 시
-
-## Arguments
-
-- `$ARGUMENTS`: 기능 설명
-
-## Workflow
-
-### 1. Requirements Analysis
-
-- 기능 요구사항 파악
-- 기존 코드베이스 분석
-- 영향 범위 확인
-
-### 2. Design
-
-- 구현 방식 결정
-- 파일 구조 계획
-- API/인터페이스 설계
-
-### 3. Implementation
-
+### 프론트엔드 기능인 경우:
 ```
-┌─────────────────────────────────────┐
-│  1. Create feature branch           │
-│  2. Implement core logic            │
-│  3. Add error handling              │
-│  4. Write tests                     │
-│  5. Update documentation            │
-└─────────────────────────────────────┘
+Use the frontend-developer agent to implement: $ARGUMENTS
 ```
 
-### 4. Verification
-
-- 단위 테스트 실행
-- 통합 테스트 실행
-- 수동 테스트
-
-### 5. Cleanup
-
-- 코드 리뷰 준비
-- 불필요한 코드 제거
-- 린트/포맷팅 확인
-
-## Output
-
+### 백엔드/API 기능인 경우:
 ```
-Feature: [feature name]
-
-Files Created:
-  - [file path]
-
-Files Modified:
-  - [file path]
-
-Tests Added:
-  - [test descriptions]
-
-Next Steps:
-  - [ ] Code review
-  - [ ] Merge to main
+Use the backend-developer agent to implement: $ARGUMENTS
 ```
 
-## Guidelines
+### 스크립트/CLI/유틸리티인 경우:
+```
+Use the general-developer agent to implement: $ARGUMENTS
+```
 
-- 작은 단위로 커밋
-- 테스트 먼저 작성 (TDD) 고려
-- 기존 패턴과 일관성 유지
+### 판단 기준:
+- UI, 컴포넌트, 스타일링 → frontend-developer
+- API, DB, 서버 로직 → backend-developer
+- 스크립트, 봇, CLI → general-developer
+
+## 에이전트 완료 후
+
+구현 완료 시 안내:
+
+```
+구현 완료.
+- /run-tests 로 테스트 확인
+- /lint --fix 로 린트 수정
+- /commit 으로 커밋
+```
+
+## Related Skills
+
+- `/full-dev`: 기획부터 전체 플로우
+- `/run-tests`: 테스트 실행
