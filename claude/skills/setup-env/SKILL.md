@@ -1,111 +1,90 @@
 ---
 name: setup-env
 description: 개발 환경 자동 설정
-argument-hint: [--clean]
+argument-hint: [--clean] [--skip-db]
+allowed-tools: Bash, Read, Grep, Glob
+model: haiku
+category: infrastructure
 ---
 
 # Setup Environment
 
 프로젝트 개발 환경을 자동으로 설정합니다.
 
+## Triggers (사용 조건)
+
+- "환경 설정해줘", "setup", "install"
+- "개발 환경 구성", "dependencies 설치"
+- 프로젝트 클론 후 초기 설정시
+
 ## Arguments
 
-- `$ARGUMENTS`: `--clean` 클린 설치 (optional)
+- `--clean`: 클린 설치 (node_modules 삭제 후 재설치)
+- `--skip-db`: DB 마이그레이션 스킵
 
 ## Workflow
 
-1. **Detect Project Type**
-   - Node.js (package.json)
-   - Python (requirements.txt, pyproject.toml)
-   - Go (go.mod)
-   - Rust (Cargo.toml)
+```
+┌─────────────────────────────────────┐
+│  1. Detect project type             │
+│  2. Install dependencies            │
+│  3. Setup configuration             │
+│  4. Database setup (optional)       │
+│  5. Verify installation             │
+└─────────────────────────────────────┘
+```
 
-2. **Install Dependencies**
-   ```bash
-   # Node.js
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
+## Install Commands
 
-   # Python
-   pip install -r requirements.txt
-   # or
-   poetry install
+| Project | Command |
+|---------|---------|
+| Node.js | `npm install` / `yarn` / `pnpm install` |
+| Python | `pip install -r requirements.txt` / `poetry install` |
+| Go | `go mod download` |
+| Rust | `cargo build` |
 
-   # Go
-   go mod download
+## Agent Integration
 
-   # Rust
-   cargo build
-   ```
+**환경 문제 해결:**
+```
+Use the devops-specialist agent to troubleshoot environment setup issues
+```
 
-3. **Setup Configuration**
-   - Copy `.env.example` to `.env` if exists
-   - Generate required config files
-   - Setup pre-commit hooks if configured
+**DB 설정:**
+```
+Use the database-specialist agent to setup database schema and migrations
+```
 
-4. **Database Setup**
-   - Run migrations
-   - Seed development data
+## Output Format
 
-5. **Verify Setup**
-   - Run health checks
-   - Execute test suite
-   - Start development server
+```
+Environment Setup Complete
+═══════════════════════════════════════
+Installed:
+  - Node.js dependencies: 342 packages
+  - Python dependencies: 28 packages
 
-## Clean Install (--clean)
+Configured:
+  ✓ .env file created
+  ✓ Git hooks installed
+  ✓ Database migrated
+
+Next Steps:
+  1. Update .env with your credentials
+  2. Run `npm run dev` to start
+═══════════════════════════════════════
+```
+
+## Examples
 
 ```bash
-# Node.js
-rm -rf node_modules
-rm package-lock.json
-npm install
-
-# Python
-rm -rf .venv
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+/setup-env                # 기본 설정
+/setup-env --clean        # 클린 설치
+/setup-env --skip-db      # DB 스킵
 ```
 
-## Common Setup Tasks
+## Related Skills
 
-### Git Hooks
-```bash
-npx husky install
-```
-
-### Environment Variables
-```bash
-if [ ! -f .env ]; then
-  cp .env.example .env
-  echo "Created .env from .env.example"
-fi
-```
-
-### Database
-```bash
-npm run db:migrate
-npm run db:seed
-```
-
-## Output
-
-```markdown
-## Environment Setup Complete
-
-### Installed
-- Node.js dependencies: 342 packages
-- Python dependencies: 28 packages
-
-### Configured
-- [x] .env file created
-- [x] Git hooks installed
-- [x] Database migrated
-
-### Next Steps
-1. Update .env with your credentials
-2. Run `npm run dev` to start
-```
+- `/db-migrate`: DB 마이그레이션
+- `/dependency-audit`: 의존성 보안 검사
+- `/build`: 빌드 확인

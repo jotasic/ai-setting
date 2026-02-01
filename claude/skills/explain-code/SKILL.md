@@ -1,45 +1,101 @@
 ---
 name: explain-code
 description: 코드를 시각적 다이어그램과 비유를 사용하여 설명합니다
-argument-hint: [filename or code snippet]
+argument-hint: <file|function> [--detail]
 allowed-tools: Read, Grep, Glob
+model: sonnet
+category: understanding
 ---
 
-# Code Explanation Skill
+# Code Explanation
 
-When explaining code, follow this structure:
+코드를 이해하기 쉽게 시각적으로 설명합니다.
 
-## 1. Analogy First
+## Triggers (사용 조건)
 
-Start with a relatable analogy:
+- "이 코드 설명해줘", "explain this"
+- "이게 뭐하는 코드야?", "how does this work"
+- 복잡한 로직 이해 필요시
+
+## Arguments
+
+- `$ARGUMENTS`: 파일 경로 또는 함수명
+- `--detail`: 상세 설명 모드
+
+## Workflow
+
+```
+┌─────────────────────────────────────┐
+│  1. Read target code                │
+│  2. Create analogy                  │
+│  3. Draw visual diagram             │
+│  4. Step-by-step walkthrough        │
+│  5. Highlight gotchas               │
+└─────────────────────────────────────┘
+```
+
+## Explanation Structure
+
+### 1. Analogy First
 > "This code is like a restaurant kitchen where..."
 
-## 2. Visual Diagram
-
-Create an ASCII diagram showing the flow:
-
+### 2. Visual Diagram
 ```
 Input → Process → Output
   │         │
   └─────────┘
 ```
 
-## 3. Step-by-Step Walkthrough
-
-Break down the code into logical steps:
+### 3. Step-by-Step Walkthrough
 1. What happens first
 2. How data transforms
 3. What gets returned
 
-## 4. Key Gotchas
-
-Highlight common mistakes or misconceptions:
-- Edge cases to watch for
+### 4. Key Gotchas
+- Edge cases
 - Performance considerations
 - Common misunderstandings
 
----
+## Agent Integration
 
-**File to explain:** $ARGUMENTS
+**심층 분석:**
+```
+Use the architect agent to analyze the design patterns used in [file]
+```
 
-If no file is specified, ask the user which file or code they want explained.
+**코드 개선:**
+```
+Use the refactorer agent to suggest improvements for [code]
+```
+
+## Output Format
+
+```
+Code: [file:function]
+═══════════════════════════════════════
+Analogy: [relatable comparison]
+
+Flow:
+  [ASCII diagram]
+
+Steps:
+  1. [first step]
+  2. [second step]
+
+Gotchas:
+  - [important note]
+═══════════════════════════════════════
+```
+
+## Examples
+
+```bash
+/explain-code src/auth/login.ts
+/explain-code useAuth --detail
+/explain-code src/utils/parser.py
+```
+
+## Related Skills
+
+- `/search-code`: 관련 코드 찾기
+- `/architecture-review`: 전체 아키텍처 이해

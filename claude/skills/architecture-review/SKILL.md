@@ -1,128 +1,107 @@
 ---
 name: architecture-review
 description: 현재 시스템 아키텍처 분석 및 리뷰
-argument-hint: [focus-area]
+argument-hint: [area] [--deep]
+allowed-tools: Read, Grep, Glob, Bash
+model: sonnet
+category: understanding
 ---
 
 # Architecture Review
 
 시스템 아키텍처를 분석하고 개선 기회를 식별합니다.
 
+## Triggers (사용 조건)
+
+- "아키텍처 분석해줘", "review architecture"
+- "구조 리뷰", "프로젝트 분석"
+- 시스템 이해 또는 리팩토링 계획시
+
 ## Arguments
 
-- `$ARGUMENTS`: 집중 분석 영역 (optional)
+- `$ARGUMENTS`: 분석 영역
   - `structure`: 프로젝트 구조
   - `dependencies`: 의존성 관계
   - `data-flow`: 데이터 흐름
   - `security`: 보안 아키텍처
+- `--deep`: 심층 분석
 
 ## Workflow
 
-1. **Scan Project Structure**
-   ```bash
-   tree -I 'node_modules|dist|.git' -L 3
-   ```
+```
+┌─────────────────────────────────────┐
+│  1. Scan project structure          │
+│  2. Analyze components              │
+│  3. Map dependencies                │
+│  4. Identify patterns               │
+│  5. Generate report                 │
+└─────────────────────────────────────┘
+```
 
-2. **Analyze Components**
-   - Entry points
-   - Core modules
-   - Shared utilities
-   - External integrations
+## Agent Integration
 
-3. **Map Dependencies**
-   - Internal dependencies
-   - External packages
-   - Circular dependencies
+**상세 설계 분석:**
+```
+Use the architect agent to evaluate design decisions and trade-offs
+```
 
-4. **Identify Patterns**
-   - Design patterns in use
-   - Anti-patterns detected
-   - Consistency issues
+**보안 분석:**
+```
+Use the security-auditor agent to review security architecture
+```
 
-5. **Generate Report**
+**성능 분석:**
+```
+Use the performance-optimizer agent to analyze performance bottlenecks
+```
 
 ## Output Format
 
-```markdown
-## Architecture Review
-
-### Project Structure
 ```
-src/
-├── api/          # REST endpoints
-├── services/     # Business logic
-├── repositories/ # Data access
-├── models/       # Domain models
-└── utils/        # Shared utilities
-```
+Architecture Review: [project]
+═══════════════════════════════════════
+Pattern: Layered Architecture
 
-### Architecture Pattern
-**Layered Architecture** with:
-- Presentation Layer (api/)
-- Business Layer (services/)
-- Data Access Layer (repositories/)
+Structure:
+  src/
+  ├── api/          # Presentation
+  ├── services/     # Business Logic
+  └── repositories/ # Data Access
 
-### Component Diagram
-```
-┌─────────────┐     ┌─────────────┐
-│   API       │────▶│  Services   │
-└─────────────┘     └─────────────┘
-                           │
-                           ▼
-                    ┌─────────────┐
-                    │ Repositories│
-                    └─────────────┘
-                           │
-                           ▼
-                    ┌─────────────┐
-                    │  Database   │
-                    └─────────────┘
-```
+Component Diagram:
+  ┌─────────┐     ┌──────────┐
+  │   API   │────▶│ Services │
+  └─────────┘     └──────────┘
+                        │
+                        ▼
+                  ┌──────────┐
+                  │   Data   │
+                  └──────────┘
 
-### Strengths
-- Clear separation of concerns
-- Consistent naming conventions
-- Good test coverage
+Strengths:
+  ✓ Clear separation of concerns
+  ✓ Consistent naming
 
-### Concerns
-| Issue | Severity | Location | Recommendation |
-|-------|----------|----------|----------------|
-| Circular dependency | Medium | services/ | Extract shared interface |
-| God class | High | UserService | Split responsibilities |
-| Missing abstraction | Low | utils/ | Create proper interfaces |
+Concerns:
+  ⚠ Circular dependency in services/
+  ⚠ UserService too large (500+ LOC)
 
-### Recommendations
-1. **High Priority**
-   - Refactor UserService (500+ LOC)
-   - Add caching layer
-
-2. **Medium Priority**
-   - Standardize error handling
-   - Add API versioning
-
-3. **Low Priority**
-   - Improve logging structure
-   - Add performance monitoring
+Recommendations:
+  1. [High] Split UserService
+  2. [Med] Add caching layer
+═══════════════════════════════════════
 ```
 
-## Analysis Areas
+## Examples
 
-### Structure
-- Directory organization
-- Module boundaries
-- Naming conventions
+```bash
+/architecture-review
+/architecture-review dependencies
+/architecture-review security --deep
+```
 
-### Dependencies
-- Package dependencies
-- Internal module coupling
-- Circular dependencies
+## Related Skills
 
-### Data Flow
-- Request/response flow
-- State management
-- Event handling
-
-### Security
-- Authentication flow
-- Authorization checks
-- Data validation
+- `/explain-code`: 특정 코드 이해
+- `/search-code`: 코드 검색
+- `/full-dev`: 새 기능 개발시 구조 참고

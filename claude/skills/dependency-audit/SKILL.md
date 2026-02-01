@@ -1,86 +1,94 @@
 ---
 name: dependency-audit
 description: 의존성 보안 및 호환성 검사
-argument-hint: [--fix]
+argument-hint: [--fix] [--report]
+allowed-tools: Bash, Read, Grep
+model: haiku
+category: infrastructure
 ---
 
 # Dependency Audit
 
 프로젝트 의존성의 보안 취약점과 업데이트 상태를 검사합니다.
 
+## Triggers (사용 조건)
+
+- "보안 검사해줘", "audit dependencies"
+- "취약점 확인", "outdated packages"
+- 배포 전 보안 점검시
+
 ## Arguments
 
-- `$ARGUMENTS`: `--fix` 자동 수정 시도 (optional)
+- `--fix`: 자동 수정 시도
+- `--report`: 상세 리포트 생성
 
 ## Workflow
 
-1. **Security Audit**
-   ```bash
-   # npm
-   npm audit
+```
+┌─────────────────────────────────────┐
+│  1. Security audit (npm/pip audit)  │
+│  2. Check outdated packages         │
+│  3. License check                   │
+│  4. Bundle impact analysis          │
+└─────────────────────────────────────┘
+```
 
-   # yarn
-   yarn audit
+## Audit Commands
 
-   # pnpm
-   pnpm audit
+| Tool | Command |
+|------|---------|
+| npm | `npm audit` |
+| yarn | `yarn audit` |
+| pip | `pip-audit` |
+| cargo | `cargo audit` |
 
-   # Python
-   pip-audit
-   ```
+## Agent Integration
 
-2. **Outdated Check**
-   ```bash
-   npm outdated
-   ```
+**취약점 수정:**
+```
+Use the security-auditor agent to review and fix vulnerability in [package]
+```
 
-3. **License Check**
-   ```bash
-   npx license-checker --summary
-   ```
+**의존성 업데이트:**
+```
+Use the dependency-manager agent to safely update outdated packages
+```
 
-4. **Bundle Impact**
-   ```bash
-   npx cost-of-modules --less
-   ```
+## Output Format
 
-## Auto-Fix (if --fix)
+```
+Dependency Audit Report
+═══════════════════════════════════════
+Security:
+  Critical: 0
+  High: 1
+  Medium: 3
+  Low: 5
+
+Vulnerabilities:
+  - lodash@4.17.20 (High) → Update to 4.17.21
+
+Outdated:
+  - react 17.0.2 → 18.2.0 (Major)
+  - axios 0.27.0 → 1.4.0 (Major)
+
+Licenses: ✓ All compatible (MIT, Apache-2.0)
+
+Recommendations:
+  1. [Critical] Fix high severity issues
+  2. [High] Update major versions
+═══════════════════════════════════════
+```
+
+## Examples
 
 ```bash
-# Safe fixes only
-npm audit fix
-
-# Including breaking changes (with confirmation)
-npm audit fix --force
+/dependency-audit            # 검사만
+/dependency-audit --fix      # 자동 수정
+/dependency-audit --report   # 상세 리포트
 ```
 
-## Report Format
+## Related Skills
 
-```markdown
-## Dependency Audit Report
-
-### Security Vulnerabilities
-| Package | Severity | Issue | Fix |
-|---------|----------|-------|-----|
-| example | High | CVE-XXX | 1.2.3 |
-
-### Outdated Packages
-| Package | Current | Wanted | Latest |
-|---------|---------|--------|--------|
-| react | 17.0.2 | 17.0.2 | 18.2.0 |
-
-### Recommendations
-1. [Critical] Fix security issues
-2. [High] Update major versions
-3. [Medium] Update minor versions
-
-### License Summary
-All licenses compatible: MIT, Apache-2.0, ISC
-```
-
-## Priority
-
-- **Critical**: Security vulnerabilities (high/critical)
-- **High**: Security vulnerabilities (medium/low)
-- **Medium**: Major version updates available
-- **Low**: Minor/patch updates
+- `/setup-env`: 환경 설정
+- `/code-quality`: 품질 검사

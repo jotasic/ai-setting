@@ -1,37 +1,39 @@
 ---
 name: lint
 description: 코드 린트 및 포맷팅을 실행합니다
-argument-hint: [file-path or --fix]
+argument-hint: [path] [--fix]
 allowed-tools: Bash, Read, Grep, Glob
+model: haiku
+category: workflow
 ---
 
 # Lint & Format
 
 코드 스타일을 검사하고 자동 수정합니다.
 
+## Triggers (사용 조건)
+
+- "린트해줘", "lint", "포맷팅"
+- "코드 스타일 검사", "eslint 돌려줘"
+- 커밋 전 코드 정리 필요시
+
 ## Arguments
 
-- `$ARGUMENTS`: 대상 파일 또는 `--fix` 옵션
+- `$ARGUMENTS`: 대상 파일/경로
+- `--fix`: 자동 수정 적용
 
 ## Workflow
 
-### 1. Detect Linter
-
-```bash
-# JavaScript/TypeScript
-test -f .eslintrc* || test -f eslint.config.*
-
-# Python
-test -f .flake8 || test -f pyproject.toml
-
-# Go
-which golangci-lint
-
-# Rust
-which clippy
+```
+┌─────────────────────────────────────┐
+│  1. Detect linter config            │
+│  2. Run linter                      │
+│  3. Run formatter                   │
+│  4. Report issues                   │
+└─────────────────────────────────────┘
 ```
 
-### 2. Run Linter
+## Lint Commands
 
 | Tool | Check | Fix |
 |------|-------|-----|
@@ -40,25 +42,46 @@ which clippy
 | Ruff | `ruff check .` | `ruff check . --fix` |
 | Black | `black --check .` | `black .` |
 | golangci-lint | `golangci-lint run` | `golangci-lint run --fix` |
-| Clippy | `cargo clippy` | `cargo clippy --fix` |
 
-### 3. Report Issues
+## Agent Integration
 
-- 스타일 위반 목록
-- 자동 수정 가능 여부
-- 수동 수정 필요 항목
+**자동 수정 불가 이슈:**
+```
+Use the refactorer agent to fix lint issues that cannot be auto-fixed
+```
 
-## Output
+**코드 품질 개선:**
+```
+Use the code-reviewer agent to review code quality beyond lint rules
+```
+
+## Output Format
 
 ```
-Lint Results:
-  Errors: X
-  Warnings: Y
-  Auto-fixable: Z
+Lint Results
+═══════════════════════════════════════
+Errors: 3
+Warnings: 7
+Auto-fixable: 8
 
 Issues:
-  [file:line] [rule] [message]
+  src/App.tsx:15 [no-unused-vars] 'x' is unused
+  src/utils.ts:23 [prefer-const] Use const
 
-To auto-fix, run:
-  /lint --fix
+To auto-fix: /lint --fix
+═══════════════════════════════════════
 ```
+
+## Examples
+
+```bash
+/lint                  # 전체 검사
+/lint --fix            # 자동 수정
+/lint src/components   # 특정 경로
+```
+
+## Related Skills
+
+- `/build`: 빌드
+- `/code-quality`: 전체 품질 파이프라인
+- `/commit`: 커밋 (린트 후)
