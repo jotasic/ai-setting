@@ -19,8 +19,8 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 ```
 .
 ├── claude/                 # Claude Code 설정
-│   ├── agents/            # 17개의 커스텀 서브에이전트
-│   ├── skills/            # 24개의 커스텀 스킬
+│   ├── agents/            # 18개의 커스텀 서브에이전트
+│   ├── skills/            # 25개의 커스텀 스킬
 │   ├── settings.json      # 권한 및 환경 설정
 │   ├── mcp.json           # MCP 서버 설정
 │   └── hooks.json         # 훅 설정
@@ -44,7 +44,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 
 ---
 
-## Agents (서브에이전트) - 17개
+## Agents (서브에이전트) - 18개
 
 ### 모델별 에이전트 분류
 
@@ -55,6 +55,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 | **sonnet** | `code-reviewer` | 코드 품질, 베스트 프랙티스 리뷰 |
 | **sonnet** | `debugger` | 에러 분석, 버그 수정 |
 | **sonnet** | `test-writer` | 테스트 코드 작성, 커버리지 개선 |
+| **sonnet** | `e2e-tester` | E2E 테스트 자동화, Playwright MCP로 브라우저 제어 |
 | **sonnet** | `frontend-developer` | 프론트엔드 구현 (UI, 상태관리, 스타일링) |
 | **sonnet** | `backend-developer` | 백엔드 구현 (API, 비즈니스 로직, DB 연동) |
 | **sonnet** | `general-developer` | 범용 개발 (스크립트, CLI, 봇, 유틸리티) |
@@ -77,11 +78,12 @@ Have the backend-developer agent implement the API endpoints
 Have the general-developer agent create a data migration script
 Have the security-auditor agent review the auth module
 Ask the devops-specialist to set up CI/CD pipeline
+Use the e2e-tester agent to test the login flow on http://localhost:3000
 ```
 
 ---
 
-## Skills (슬래시 커맨드) - 25개
+## Skills (슬래시 커맨드) - 26개
 
 ### Development Workflow
 
@@ -89,6 +91,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 |-------|-------|-------------|
 | `/build` | `/build [target]` | 프로젝트 빌드 |
 | `/run-tests` | `/run-tests [path]` | 테스트 실행 |
+| `/e2e-test` | `/e2e-test <url>` | E2E 테스트 (Playwright MCP) |
 | `/lint` | `/lint [--fix]` | 린트 및 포맷팅 |
 | `/commit` | `/commit [message]` | Conventional Commits |
 | `/code-quality` | `/code-quality` | 전체 품질 파이프라인 |
@@ -175,7 +178,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 - `10`: 일반적인 사용
 - `0`: 설명 생략 (codeOnly: true와 동일 효과)
 
-### mcp.json - MCP 서버 설정 (16개)
+### mcp.json - MCP 서버 설정 (17개)
 
 지원되는 MCP 서버:
 - `filesystem`: 파일시스템 접근
@@ -184,6 +187,7 @@ Ask the devops-specialist to set up CI/CD pipeline
 - `postgres`, `sqlite`: 데이터베이스
 - `memory`: 지식 그래프 메모리
 - `puppeteer`: 브라우저 자동화
+- `playwright`: E2E 테스트 자동화 (스크린샷, 브라우저 제어)
 - `docker`: 컨테이너 관리
 - `slack`, `notion`, `linear`: 협업 도구
 - `sentry`: 에러 모니터링

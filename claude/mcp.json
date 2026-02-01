@@ -47,6 +47,11 @@
       "command": "npx",
       "args": ["-y", "@anthropic/mcp-server-puppeteer"]
     },
+    "playwright": {
+      "_comment": "E2E 테스트 자동화 - 브라우저 제어, 스크린샷, 상호작용",
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+    },
     "docker": {
       "_comment": "Docker 컨테이너 및 이미지 관리",
       "command": "uvx",
