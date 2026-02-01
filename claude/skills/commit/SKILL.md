@@ -1,37 +1,40 @@
 ---
 name: commit
 description: 변경사항을 커밋합니다 (Conventional Commits)
-argument-hint: [commit message or --amend]
+argument-hint: [message] [--amend]
 disable-model-invocation: true
 allowed-tools: Bash, Read, Grep
+model: haiku
+category: workflow
 ---
 
 # Git Commit
 
 변경사항을 Conventional Commits 형식으로 커밋합니다.
 
+## Triggers (사용 조건)
+
+- "커밋해줘", "commit"
+- "변경사항 저장", "git commit"
+- 코드 작업 완료 후
+
 ## Arguments
 
-- `$ARGUMENTS`: 커밋 메시지 또는 옵션
+- `$ARGUMENTS`: 커밋 메시지
+- `--amend`: 이전 커밋 수정
 
 ## Workflow
 
-### 1. Check Status
-
-```bash
-git status
-git diff --staged
+```
+┌─────────────────────────────────────┐
+│  1. Check status & diff             │
+│  2. Stage changes                   │
+│  3. Create commit                   │
+│  4. Verify commit                   │
+└─────────────────────────────────────┘
 ```
 
-### 2. Stage Changes (if needed)
-
-```bash
-git add -p  # Interactive staging
-```
-
-### 3. Create Commit
-
-Conventional Commits 형식:
+## Conventional Commits Format
 
 ```
 <type>(<scope>): <description>
@@ -41,7 +44,8 @@ Conventional Commits 형식:
 [optional footer]
 ```
 
-#### Types
+### Types
+
 | Type | Description |
 |------|-------------|
 | feat | 새로운 기능 |
@@ -53,31 +57,36 @@ Conventional Commits 형식:
 | chore | 빌드, 설정 등 |
 | perf | 성능 개선 |
 
-### 4. Verify
+## Output Format
 
-```bash
-git log -1 --oneline
-git show --stat
+```
+Commit Created
+═══════════════════════════════════════
+Hash: abc1234
+Type: feat
+Scope: auth
+Message: add OAuth2 login support
+
+Files: 3 changed, 45 insertions(+), 12 deletions(-)
+═══════════════════════════════════════
 ```
 
 ## Examples
 
 ```bash
-# Feature
-git commit -m "feat(auth): add OAuth2 login support"
-
-# Bug fix
-git commit -m "fix(api): handle null response correctly"
-
-# Breaking change
-git commit -m "feat(api)!: change response format
-
-BREAKING CHANGE: response now returns array instead of object"
+/commit feat(auth): add OAuth2 login
+/commit fix(api): handle null response
+/commit --amend
 ```
 
 ## Guidelines
 
-- 제목은 50자 이내
-- 본문은 72자에서 줄바꿈
-- 명령형 현재시제 사용 (Add, not Added)
-- Why를 설명, What은 코드가 설명
+- 제목 50자 이내
+- 본문 72자에서 줄바꿈
+- 명령형 현재시제 (Add, not Added)
+
+## Related Skills
+
+- `/lint`: 커밋 전 린트
+- `/code-quality`: 품질 검사 후 커밋
+- `/git-workflow`: 브랜치 워크플로우

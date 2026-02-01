@@ -1,8 +1,10 @@
 ---
 name: search-code
 description: 코드베이스에서 특정 패턴이나 기능을 검색합니다
-argument-hint: [search query]
+argument-hint: <query> [--type=<file-type>]
 allowed-tools: Read, Grep, Glob, Bash
+model: haiku
+category: understanding
 agent: Explore
 ---
 
@@ -10,71 +12,78 @@ agent: Explore
 
 코드베이스에서 원하는 코드를 효과적으로 찾습니다.
 
+## Triggers (사용 조건)
+
+- "이거 어디 있어?", "search for"
+- "함수 찾아줘", "find where"
+- 특정 코드 위치 확인 필요시
+
 ## Arguments
 
-- `$ARGUMENTS`: 검색할 패턴 또는 설명
+- `$ARGUMENTS`: 검색 패턴 또는 설명
+- `--type=<ext>`: 파일 타입 필터 (ts, py, go)
+
+## Workflow
+
+```
+┌─────────────────────────────────────┐
+│  1. Analyze search query            │
+│  2. Choose search strategy          │
+│  3. Execute search                  │
+│  4. Filter & rank results           │
+│  5. Show context                    │
+└─────────────────────────────────────┘
+```
 
 ## Search Strategies
 
-### 1. Text Search
+| Strategy | Use Case | Example |
+|----------|----------|---------|
+| Text | 정확한 텍스트 | `"handleLogin"` |
+| Regex | 패턴 매칭 | `"use.*Hook"` |
+| Symbol | 함수/클래스 | `"function auth"` |
+| Git | 히스토리 | `"who changed auth"` |
 
-```bash
-# Exact match
-grep -rn "searchTerm" --include="*.{js,ts,py}"
+## Agent Integration
 
-# Regex
-grep -rn "pattern.*match" --include="*.{js,ts,py}"
-
-# Case insensitive
-grep -rni "searchterm" --include="*.{js,ts,py}"
+**코드 이해:**
+```
+Use the explain-code skill to understand the found code
 ```
 
-### 2. File Search
-
-```bash
-# By name
-find . -name "*.test.js"
-
-# By pattern
-find . -path "**/components/*.tsx"
+**관련 코드 분석:**
 ```
-
-### 3. Symbol Search
-
-- 함수 정의: `function functionName` or `def functionName`
-- 클래스 정의: `class ClassName`
-- 변수 할당: `const/let/var varName =`
-
-### 4. Git History Search
-
-```bash
-# Commit messages
-git log --oneline --grep="keyword"
-
-# Code changes
-git log -S "code_snippet" --oneline
-
-# By author
-git log --author="name" --oneline
+Use the architect agent to analyze dependencies of [found-file]
 ```
 
 ## Output Format
 
 ```
-Search: "$ARGUMENTS"
+Search: "[query]"
+═══════════════════════════════════════
+Found 5 matches:
 
-Found X matches:
+src/auth/login.ts:23
+  → function handleLogin(credentials) {
 
-[file:line] context...
-[file:line] context...
+src/hooks/useAuth.ts:45
+  → const login = async (data) => {
 
-Related:
-  - [related files or functions]
+Related files:
+  - src/types/auth.ts
+  - src/api/auth.ts
+═══════════════════════════════════════
 ```
 
-## Tips
+## Examples
 
-- 구체적인 검색어 사용
-- 파일 타입 필터링 활용
-- 정규표현식으로 유연한 검색
-- 결과가 많으면 범위 좁히기
+```bash
+/search-code handleLogin
+/search-code "async function" --type=ts
+/search-code authentication logic
+```
+
+## Related Skills
+
+- `/explain-code`: 찾은 코드 설명
+- `/architecture-review`: 구조 분석

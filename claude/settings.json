@@ -61,6 +61,14 @@
       "Grep"
     ],
     "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/credentials.json)",
+      "Read(**/secrets.json)",
+      "Read(**/.aws/credentials)",
+      "Read(**/.ssh/*)",
       "Bash(rm -rf /)",
       "Bash(rm -rf ~)",
       "Bash(rm -rf /*)",
@@ -79,7 +87,10 @@
       "Bash(> /dev/*)",
       "Bash(kubectl delete*)",
       "Bash(docker rm -f*)",
-      "Bash(terraform destroy*)"
+      "Bash(terraform destroy*)",
+      "Bash(cat */.env*)",
+      "Bash(cat *.pem)",
+      "Bash(cat *credentials*)"
     ]
   },
   "env": {

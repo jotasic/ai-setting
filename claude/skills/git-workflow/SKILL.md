@@ -1,68 +1,45 @@
 ---
 name: git-workflow
 description: Git 브랜치 워크플로우를 관리합니다 (feature branch, PR)
-argument-hint: [action: start|finish|sync]
+argument-hint: <start|finish|sync> [name]
 disable-model-invocation: true
 allowed-tools: Bash, Read
+model: haiku
+category: workflow
 ---
 
 # Git Workflow
 
 Git 브랜치 기반 워크플로우를 자동화합니다.
 
+## Triggers (사용 조건)
+
+- "브랜치 만들어줘", "feature 시작"
+- "PR 준비", "finish feature"
+- "main 동기화", "sync branch"
+
 ## Arguments
 
-- `start [feature-name]`: 새 feature 브랜치 생성
+- `start [name]`: 새 feature 브랜치 생성
 - `finish`: 현재 브랜치 PR 생성 준비
 - `sync`: main 브랜치와 동기화
 
-## Workflow: Start Feature
+## Workflow
 
-```bash
-# 1. main 브랜치로 이동 및 최신화
-git checkout main
-git pull origin main
-
-# 2. feature 브랜치 생성
-git checkout -b feature/$FEATURE_NAME
-
-# 3. 확인
-git status
+```
+┌─────────────────────────────────────┐
+│  start  → checkout main → pull     │
+│         → create branch            │
+├─────────────────────────────────────┤
+│  finish → check status → push      │
+│         → create PR                │
+├─────────────────────────────────────┤
+│  sync   → fetch main → rebase      │
+│         → resolve conflicts        │
+└─────────────────────────────────────┘
 ```
 
-## Workflow: Finish Feature
-
-```bash
-# 1. 변경사항 확인
-git status
-git diff --stat main...HEAD
-
-# 2. 커밋 정리 (선택)
-git log --oneline main..HEAD
-
-# 3. push
-git push -u origin $(git branch --show-current)
-
-# 4. PR 생성
-gh pr create --fill
-```
-
-## Workflow: Sync with Main
-
-```bash
-# 1. main 최신화
-git fetch origin main
-
-# 2. rebase 또는 merge
-git rebase origin/main
-# 또는
-git merge origin/main
-
-# 3. 충돌 해결 후
-git push --force-with-lease
-```
-
-## Branch Naming Convention
+## Branch Naming
 
 | Type | Pattern | Example |
 |------|---------|---------|
@@ -70,3 +47,45 @@ git push --force-with-lease
 | Bugfix | `fix/[issue]` | `fix/login-error` |
 | Hotfix | `hotfix/[name]` | `hotfix/security-patch` |
 | Release | `release/[version]` | `release/v1.2.0` |
+
+## Agent Integration
+
+**충돌 해결:**
+```
+Use the debugger agent to resolve merge conflicts in [files]
+```
+
+**PR 리뷰:**
+```
+Use the code-reviewer agent to review changes before PR
+```
+
+## Output Format
+
+```
+Git Workflow: [action]
+═══════════════════════════════════════
+Branch: feature/user-auth
+Base: main
+Status: Ready for PR
+
+Commands executed:
+  ✓ git checkout main
+  ✓ git pull origin main
+  ✓ git checkout -b feature/user-auth
+═══════════════════════════════════════
+```
+
+## Examples
+
+```bash
+/git-workflow start user-auth
+/git-workflow finish
+/git-workflow sync
+```
+
+## Related Skills
+
+- `/commit`: 커밋
+- `/review-pr`: PR 리뷰
+- `/code-quality`: PR 전 품질 검사

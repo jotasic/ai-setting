@@ -1,126 +1,97 @@
 ---
 name: type-check-improve
 description: TypeScript/Python 타입 검사 강화
-argument-hint: [path]
+argument-hint: [path] [--strict]
+allowed-tools: Bash, Read, Edit, Write, Grep, Glob
+model: sonnet
+category: documentation
 ---
 
 # Type Check & Improve
 
 타입 커버리지를 분석하고 타입 안전성을 강화합니다.
 
+## Triggers (사용 조건)
+
+- "타입 검사해줘", "type check"
+- "타입 커버리지 개선", "fix any types"
+- 타입 안전성 강화 필요시
+
 ## Arguments
 
-- `$ARGUMENTS`: 검사할 경로 (default: `./src`)
+- `$ARGUMENTS`: 검사 경로 (default: `./src`)
+- `--strict`: strict 모드 적용
 
 ## Workflow
 
-1. **Run Type Check**
-   ```bash
-   # TypeScript
-   npx tsc --noEmit
-
-   # Python
-   mypy .
-   pyright .
-   ```
-
-2. **Analyze Coverage**
-   ```bash
-   # TypeScript
-   npx type-coverage
-
-   # Python
-   mypy --html-report ./type-report .
-   ```
-
-3. **Identify Issues**
-   - Implicit `any` types
-   - Missing return types
-   - Unsafe type assertions
-   - Missing null checks
-
-4. **Generate Improvements**
-   - Add explicit type annotations
-   - Replace `any` with proper types
-   - Add type guards
-   - Fix type errors
-
-## TypeScript Improvements
-
-### Before
-```typescript
-function process(data) {
-  return data.map(item => item.value);
-}
+```
+┌─────────────────────────────────────┐
+│  1. Run type checker                │
+│  2. Analyze coverage                │
+│  3. Identify issues                 │
+│  4. Generate improvements           │
+└─────────────────────────────────────┘
 ```
 
-### After
-```typescript
-interface DataItem {
-  value: string;
-}
+## Type Check Commands
 
-function process(data: DataItem[]): string[] {
-  return data.map(item => item.value);
-}
+| Language | Command |
+|----------|---------|
+| TypeScript | `npx tsc --noEmit` |
+| Python | `mypy .` / `pyright` / `ruff check --select=ANN` |
+
+## Lint Commands (Pre-defined)
+
+| Language | Tool | Command |
+|----------|------|---------|
+| Python | ruff | `ruff check .` |
+| Python | ruff (fix) | `ruff check --fix .` |
+| TypeScript | eslint | `npx eslint --ext .ts,.tsx .` |
+| Go | golangci-lint | `golangci-lint run` |
+
+## Agent Integration
+
+**타입 에러 수정:**
+```
+Use the debugger agent to fix type errors in [file]
 ```
 
-## Python Improvements
-
-### Before
-```python
-def process(data):
-    return [item.value for item in data]
+**타입 정의 작성:**
+```
+Use the backend-developer agent to add proper type definitions
 ```
 
-### After
-```python
-from typing import List
+## Output Format
 
-class DataItem:
-    value: str
+```
+Type Coverage Report
+═══════════════════════════════════════
+Coverage: 78% → Target: 95%
 
-def process(data: List[DataItem]) -> List[str]:
-    return [item.value for item in data]
+Issues Found:
+  - src/api.ts:45 - Implicit any
+  - src/utils.ts:23 - Missing return type
+
+Improvements Made:
+  ✓ Added types to 15 functions
+  ✓ Replaced 8 `any` types
+  ✓ Added 3 type guards
+
+Remaining:
+  - 12 implicit any
+  - 5 missing return types
+═══════════════════════════════════════
 ```
 
-## Strict Mode Checklist
+## Examples
 
-### TypeScript (tsconfig.json)
-```json
-{
-  "compilerOptions": {
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitReturns": true,
-    "noUncheckedIndexedAccess": true
-  }
-}
+```bash
+/type-check-improve                # 전체 검사
+/type-check-improve src/api        # 특정 경로
+/type-check-improve --strict       # strict 모드
 ```
 
-### Python (mypy.ini)
-```ini
-[mypy]
-strict = true
-warn_return_any = true
-warn_unused_ignores = true
-```
+## Related Skills
 
-## Output
-
-```markdown
-## Type Coverage Report
-
-### Current: 78% → Target: 95%
-
-### Issues Found
-| File | Line | Issue | Suggestion |
-|------|------|-------|------------|
-| api.ts | 45 | Implicit any | Add User type |
-
-### Improvements Made
-- [x] Added types to 15 functions
-- [x] Replaced 8 `any` types
-- [x] Added 3 type guards
-```
+- `/lint`: 코드 스타일 검사
+- `/code-quality`: 전체 품질 검사
