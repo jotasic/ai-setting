@@ -2,93 +2,29 @@
 name: generate-claudemd
 description: 세션 대화 기록과 프로젝트 분석을 통해 CLAUDE.md 자동 생성
 argument-hint: [--full] [--minimal] [--append]
-allowed-tools: Bash, Read, Write, Grep, Glob
-model: sonnet
+allowed-tools: Task
+model: haiku
 category: documentation
 ---
 
 # Generate CLAUDE.md
 
-현재 세션의 대화 기록과 프로젝트 구조를 분석하여 CLAUDE.md를 생성합니다.
+## ⚡ 즉시 실행
 
-## Triggers (사용 조건)
-
-- "CLAUDE.md 만들어줘", "generate claudemd"
-- "프로젝트 문서화", "setup claude config"
-- 새 프로젝트 설정시
-
-## Arguments
-
-- `--full`: 전체 분석 포함
-- `--minimal`: 최소 버전
-- `--append`: 기존 파일에 추가
-- `--output <path>`: 출력 경로
-
-## Workflow
+**아래 에이전트를 즉시 호출하세요:**
 
 ```
-┌─────────────────────────────────────┐
-│  1. Analyze project structure       │
-│  2. Detect configurations           │
-│  3. Extract session learnings       │
-│  4. Generate documentation          │
-└─────────────────────────────────────┘
+Use the claudemd-generator agent to create CLAUDE.md documentation: $ARGUMENTS
 ```
 
-## Output Modes
+## 에이전트 완료 후
 
-| Mode | Content |
-|------|---------|
-| `--minimal` | Quick Start, Commands, Tips |
-| default | + Structure, Conventions |
-| `--full` | + Architecture, API, Deployment |
-
-## Agent Integration
-
-**상세 분석:**
-```
-Use the claudemd-generator agent to create comprehensive documentation
-```
-
-**아키텍처 문서:**
-```
-Use the architect agent to document system architecture
-```
-
-## Auto-Detection
-
-- 프로젝트 언어/프레임워크
-- 패키지 매니저
-- 테스트 프레임워크
-- 린터/포매터
-- CI/CD 설정
-
-## Output Format
+생성 완료 시 안내:
 
 ```
-CLAUDE.md Generated
-═══════════════════════════════════════
-Project: [name]
-Type: [framework]
-
-Sections:
-  ✓ Quick Start
-  ✓ Project Structure
-  ✓ Development Commands
-  ✓ Testing
-  ✓ Tips for Claude
-
-Output: ./CLAUDE.md
-═══════════════════════════════════════
-```
-
-## Examples
-
-```bash
-/generate-claudemd                 # 기본
-/generate-claudemd --full          # 전체 분석
-/generate-claudemd --minimal       # 최소 버전
-/generate-claudemd --append        # 기존에 추가
+CLAUDE.md 생성 완료.
+- 아키텍처 추가: Use the architect agent to document architecture
+- 환경 설정: /setup-env
 ```
 
 ## Related Skills

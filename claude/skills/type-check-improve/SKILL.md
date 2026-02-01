@@ -2,93 +2,29 @@
 name: type-check-improve
 description: TypeScript/Python 타입 검사 강화
 argument-hint: [path] [--strict]
-allowed-tools: Bash, Read, Edit, Write, Grep, Glob
-model: sonnet
-category: documentation
+allowed-tools: Task, Bash
+model: haiku
+category: development
 ---
 
 # Type Check & Improve
 
-타입 커버리지를 분석하고 타입 안전성을 강화합니다.
+## ⚡ 즉시 실행
 
-## Triggers (사용 조건)
-
-- "타입 검사해줘", "type check"
-- "타입 커버리지 개선", "fix any types"
-- 타입 안전성 강화 필요시
-
-## Arguments
-
-- `$ARGUMENTS`: 검사 경로 (default: `./src`)
-- `--strict`: strict 모드 적용
-
-## Workflow
+**아래 에이전트를 즉시 호출하세요:**
 
 ```
-┌─────────────────────────────────────┐
-│  1. Run type checker                │
-│  2. Analyze coverage                │
-│  3. Identify issues                 │
-│  4. Generate improvements           │
-└─────────────────────────────────────┘
+Use the refactorer agent to analyze and improve type coverage for: $ARGUMENTS
 ```
 
-## Type Check Commands
+## 에이전트 완료 후
 
-| Language | Command |
-|----------|---------|
-| TypeScript | `npx tsc --noEmit` |
-| Python | `mypy .` / `pyright` / `ruff check --select=ANN` |
-
-## Lint Commands (Pre-defined)
-
-| Language | Tool | Command |
-|----------|------|---------|
-| Python | ruff | `ruff check .` |
-| Python | ruff (fix) | `ruff check --fix .` |
-| TypeScript | eslint | `npx eslint --ext .ts,.tsx .` |
-| Go | golangci-lint | `golangci-lint run` |
-
-## Agent Integration
-
-**타입 에러 수정:**
-```
-Use the debugger agent to fix type errors in [file]
-```
-
-**타입 정의 작성:**
-```
-Use the backend-developer agent to add proper type definitions
-```
-
-## Output Format
+검사 완료 시 안내:
 
 ```
-Type Coverage Report
-═══════════════════════════════════════
-Coverage: 78% → Target: 95%
-
-Issues Found:
-  - src/api.ts:45 - Implicit any
-  - src/utils.ts:23 - Missing return type
-
-Improvements Made:
-  ✓ Added types to 15 functions
-  ✓ Replaced 8 `any` types
-  ✓ Added 3 type guards
-
-Remaining:
-  - 12 implicit any
-  - 5 missing return types
-═══════════════════════════════════════
-```
-
-## Examples
-
-```bash
-/type-check-improve                # 전체 검사
-/type-check-improve src/api        # 특정 경로
-/type-check-improve --strict       # strict 모드
+타입 검사 완료.
+- 타입 에러 수정: Use the debugger agent to fix type errors
+- 린트 검사: /lint --fix
 ```
 
 ## Related Skills
