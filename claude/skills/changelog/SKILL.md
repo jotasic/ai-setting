@@ -1,6 +1,6 @@
 ---
 name: changelog
-description: 커밋 로그에서 CHANGELOG 자동 생성
+description: Auto-generate CHANGELOG from commit logs
 argument-hint: [version] [--since=<tag>]
 allowed-tools: Bash, Read, Write
 model: haiku

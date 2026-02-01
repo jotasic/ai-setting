@@ -1,6 +1,6 @@
 ---
 name: claudemd-generator
-description: 세션 대화 기록을 분석하여 프로젝트에 맞는 CLAUDE.md를 자동 생성하는 전문가
+description: Expert who analyzes session conversation history to auto-generate project-specific CLAUDE.md
 tools: Read, Write, Glob, Grep, Bash
 model: sonnet
 ---

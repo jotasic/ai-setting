@@ -1,6 +1,6 @@
 ---
 name: setup-env
-description: 개발 환경 자동 설정
+description: Auto-setup development environment
 argument-hint: [--clean] [--skip-db]
 allowed-tools: Bash, Read, Grep, Glob
 model: haiku

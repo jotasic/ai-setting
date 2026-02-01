@@ -1,6 +1,6 @@
 ---
 name: performance-optimizer
-description: 성능 병목 지점을 분석하고 최적화 방안을 제시하는 전문가. 느린 쿼리, 메모리 누수, 번들 크기 등 성능 이슈가 있을 때 사용하세요.
+description: Performance bottleneck analysis and optimization expert. Use for slow queries, memory leaks, bundle size issues.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

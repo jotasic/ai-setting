@@ -1,6 +1,6 @@
 ---
 name: type-check-improve
-description: TypeScript/Python 타입 검사 강화
+description: Improve TypeScript/Python type checking
 argument-hint: [path] [--strict]
 allowed-tools: Task, Bash
 model: haiku

@@ -1,6 +1,6 @@
 ---
 name: review-pr
-description: GitHub Pull Request를 분석하고 리뷰합니다
+description: Analyze and review GitHub Pull Request
 argument-hint: [pr-number]
 allowed-tools: Task, Bash
 model: haiku

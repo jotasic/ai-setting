@@ -1,6 +1,6 @@
 ---
 name: generate-claudemd
-description: 세션 대화 기록과 프로젝트 분석을 통해 CLAUDE.md 자동 생성
+description: Auto-generate CLAUDE.md from session history and project analysis
 argument-hint: [--full] [--minimal] [--append]
 allowed-tools: Task
 model: haiku

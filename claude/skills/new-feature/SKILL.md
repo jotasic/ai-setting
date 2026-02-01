@@ -1,6 +1,6 @@
 ---
 name: new-feature
-description: 새로운 기능을 구현합니다
+description: Implement new feature
 argument-hint: [feature description]
 allowed-tools: Task, Bash, Read
 model: haiku

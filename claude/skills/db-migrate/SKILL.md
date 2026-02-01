@@ -1,6 +1,6 @@
 ---
 name: db-migrate
-description: 데이터베이스 마이그레이션 생성 및 실행
+description: Create and run database migrations
 argument-hint: <create|run|rollback|status> [name]
 allowed-tools: Task, Bash
 model: haiku

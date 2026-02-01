@@ -1,6 +1,6 @@
 ---
 name: devops-specialist
-description: DevOps 및 인프라 전문가. Docker, Kubernetes, CI/CD 파이프라인, 클라우드 설정이 필요할 때 사용하세요.
+description: DevOps and infrastructure expert. Use for Docker, Kubernetes, CI/CD pipelines, and cloud setup.
 tools: Read, Edit, Write, Bash, Grep, Glob
 model: sonnet
 ---

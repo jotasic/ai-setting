@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: 코드 품질, 보안, 베스트 프랙티스를 검토하는 시니어 코드 리뷰어. 코드 변경 후 사전에 사용하세요.
+description: Senior code reviewer for code quality, security, and best practices. Use before committing changes.
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit
 model: sonnet

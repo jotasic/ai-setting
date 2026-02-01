@@ -1,6 +1,6 @@
 ---
 name: test-writer
-description: 테스트 코드를 작성하고 테스트 커버리지를 개선하는 전문가. 새 기능 구현 후 또는 테스트가 필요할 때 사용하세요.
+description: Test code writer and coverage improvement expert. Use after implementing new features or when tests are needed.
 tools: Read, Edit, Write, Bash, Grep, Glob
 model: sonnet
 permissionMode: acceptEdits

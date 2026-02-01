@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Git 브랜치 워크플로우를 관리합니다 (feature branch, PR)
+description: Manage Git branch workflow (feature branch, PR)
 argument-hint: <start|finish|sync> [name]
 disable-model-invocation: true
 allowed-tools: Bash, Read

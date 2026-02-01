@@ -1,6 +1,6 @@
 ---
 name: database-specialist
-description: 데이터베이스 설계 및 최적화 전문가. 스키마 설계, 마이그레이션, 쿼리 최적화가 필요할 때 사용하세요.
+description: Database design and optimization expert. Use for schema design, migrations, and query optimization.
 tools: Read, Edit, Write, Bash, Grep, Glob
 model: sonnet
 ---

@@ -1,6 +1,6 @@
 ---
 name: estimate-effort
-description: 코드 변경 규모 및 영향도 분석
+description: Analyze code change scope and impact
 argument-hint: <task-description>
 allowed-tools: Task
 model: haiku

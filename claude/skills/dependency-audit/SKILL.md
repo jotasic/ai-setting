@@ -1,6 +1,6 @@
 ---
 name: dependency-audit
-description: 의존성 보안 및 호환성 검사
+description: Audit dependency security and compatibility
 argument-hint: [--fix] [--report]
 allowed-tools: Task, Bash
 model: haiku
