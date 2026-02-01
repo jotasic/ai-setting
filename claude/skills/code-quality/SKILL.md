@@ -3,11 +3,19 @@ name: code-quality
 description: 코드 품질 검사 파이프라인을 실행합니다 (lint, test, type-check, security)
 argument-hint: [--fix]
 allowed-tools: Bash, Read, Grep, Glob
+model: haiku
+category: workflow
 ---
 
 # Code Quality Pipeline
 
 전체 코드 품질 검사를 순차적으로 실행합니다.
+
+## Triggers (사용 조건)
+
+- "품질 검사해줘", "check quality"
+- "전체 검사", "run all checks"
+- PR 전 검증 필요시
 
 ## Arguments
 

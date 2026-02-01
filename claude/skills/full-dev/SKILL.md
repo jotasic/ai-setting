@@ -2,11 +2,20 @@
 name: full-dev
 description: 요구사항부터 개발 완료까지 전체 플로우 실행
 argument-hint: <feature-description>
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
+model: sonnet
+category: workflow
 ---
 
 # Full Development Flow
 
 요구사항: $ARGUMENTS
+
+## Triggers (사용 조건)
+
+- "전체 개발해줘", "full development"
+- "기획부터 구현까지", "end to end"
+- 새 기능 전체 플로우 필요시
 
 ## 실행 플로우
 
@@ -137,3 +146,17 @@ Use the doc-writer agent to update documentation
 2. **에이전트 간 문서 공유**: PRD, 설계 문서를 기반으로 구현
 3. **점진적 진행**: 한 번에 모든 단계 실행하지 않고, 단계별 확인
 4. **피드백 반영**: 각 단계에서 문제 발견시 이전 단계로 돌아가 수정
+
+## Examples
+
+```bash
+/full-dev 사용자 알림 시스템
+/full-dev 결제 기능 - 카드, 계좌이체 지원
+/full-dev 관리자 대시보드
+```
+
+## Related Skills
+
+- `/write-spec`: PRD만 작성
+- `/new-feature`: 구현만 (설계 없이)
+- `/architecture-review`: 기존 아키텍처 분석

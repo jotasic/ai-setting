@@ -2,12 +2,20 @@
 name: new-feature
 description: 새로운 기능을 구현합니다
 argument-hint: [feature description]
-allowed-tools: Read, Edit, Write, Bash, Grep, Glob
+allowed-tools: Read, Edit, Write, Bash, Grep, Glob, Task
+model: sonnet
+category: development
 ---
 
 # Implement New Feature
 
 새로운 기능을 체계적으로 구현합니다.
+
+## Triggers (사용 조건)
+
+- "기능 구현해줘", "implement feature"
+- "새 기능 추가", "add feature"
+- 설계 없이 바로 구현 시
 
 ## Arguments
 
