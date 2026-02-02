@@ -1,6 +1,6 @@
 ---
 name: run-tests
-description: 프로젝트의 테스트를 실행합니다
+description: Run project tests
 argument-hint: [path] [--coverage] [--watch]
 allowed-tools: Bash, Read, Grep, Glob
 model: haiku

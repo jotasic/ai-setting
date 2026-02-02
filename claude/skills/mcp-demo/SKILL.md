@@ -1,6 +1,6 @@
 ---
 name: mcp-demo
-description: MCP 서버 사용법 데모 및 가이드
+description: MCP server usage demo and guide
 argument-hint: [server-name]
 allowed-tools: Read, Bash
 model: haiku

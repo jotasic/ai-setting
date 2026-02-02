@@ -1,6 +1,6 @@
 ---
 name: refactorer
-description: 코드 구조를 개선하고 리팩토링하는 전문가. 코드 품질 개선이 필요할 때 사용하세요.
+description: Code structure improvement and refactoring expert. Use for code quality improvements.
 tools: Read, Edit, Write, Bash, Grep, Glob
 model: sonnet
 permissionMode: acceptEdits

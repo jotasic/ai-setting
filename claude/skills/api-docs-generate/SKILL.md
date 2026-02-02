@@ -1,6 +1,6 @@
 ---
 name: api-docs-generate
-description: OpenAPI/Swagger API 문서 자동 생성
+description: Auto-generate OpenAPI/Swagger API documentation
 argument-hint: [path] [--format=<yaml|json>]
 allowed-tools: Task
 model: haiku

@@ -1,6 +1,6 @@
 ---
 name: security-auditor
-description: 보안 취약점을 검사하고 보안 모범 사례를 적용하는 전문가. 보안 검토가 필요할 때 사용하세요.
+description: Security vulnerability scanner and best practices expert. Use for security reviews.
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit
 model: opus

@@ -1,6 +1,6 @@
 ---
 name: architecture-review
-description: 현재 시스템 아키텍처 분석 및 리뷰
+description: Analyze and review current system architecture
 argument-hint: [area] [--deep]
 allowed-tools: Task
 model: haiku

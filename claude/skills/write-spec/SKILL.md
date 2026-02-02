@@ -1,6 +1,6 @@
 ---
 name: write-spec
-description: 사용자 요구사항을 기획서(PRD)로 변환
+description: Convert user requirements to PRD
 argument-hint: <feature-description>
 allowed-tools: Task
 model: haiku

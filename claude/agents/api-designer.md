@@ -1,6 +1,6 @@
 ---
 name: api-designer
-description: REST/GraphQL API 설계 전문가. API 엔드포인트 설계, 스키마 정의, 버전 관리가 필요할 때 사용하세요.
+description: REST/GraphQL API design expert. Use for API endpoint design, schema definition, and versioning.
 tools: Read, Edit, Write, Grep, Glob
 model: sonnet
 ---

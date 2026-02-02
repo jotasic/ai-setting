@@ -1,6 +1,6 @@
 ---
 name: create-testdata
-description: 테스트 데이터 및 픽스처 생성
+description: Generate test data and fixtures
 argument-hint: <model> [count] [--format=<json|sql|factory>]
 allowed-tools: Task
 model: haiku

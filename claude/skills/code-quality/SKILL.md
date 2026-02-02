@@ -1,6 +1,6 @@
 ---
 name: code-quality
-description: 코드 품질 검사 파이프라인을 실행합니다 (lint, test, type-check, security)
+description: Run code quality pipeline (lint, test, type-check, security)
 argument-hint: [--fix]
 allowed-tools: Bash, Read, Grep, Glob
 ---

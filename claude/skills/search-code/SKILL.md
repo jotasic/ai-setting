@@ -1,6 +1,6 @@
 ---
 name: search-code
-description: 코드베이스에서 특정 패턴이나 기능을 검색합니다
+description: Search codebase for specific patterns or functions
 argument-hint: <query> [--type=<file-type>]
 allowed-tools: Read, Grep, Glob, Bash
 model: haiku

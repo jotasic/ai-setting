@@ -1,6 +1,6 @@
 ---
 name: explain-code
-description: 코드를 시각적 다이어그램과 비유를 사용하여 설명합니다
+description: Explain code using visual diagrams and analogies
 argument-hint: <file|function> [--detail]
 allowed-tools: Task, Read
 model: haiku

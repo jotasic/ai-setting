@@ -1,6 +1,6 @@
 ---
 name: performance-profile
-description: 성능 프로파일링 및 벤치마크 실행
+description: Run performance profiling and benchmarks
 argument-hint: [target] [--report]
 allowed-tools: Task, Bash
 model: haiku

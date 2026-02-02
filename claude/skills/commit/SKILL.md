@@ -1,6 +1,6 @@
 ---
 name: commit
-description: 변경사항을 커밋합니다 (Conventional Commits)
+description: Commit changes (Conventional Commits)
 argument-hint: [message] [--amend]
 disable-model-invocation: true
 allowed-tools: Bash, Read, Grep

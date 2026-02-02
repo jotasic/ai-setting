@@ -1,6 +1,6 @@
 ---
 name: fix-issue
-description: GitHub 이슈를 분석하고 수정 사항을 구현합니다
+description: Analyze GitHub issue and implement fix
 argument-hint: [issue-number]
 allowed-tools: Task, Bash
 model: haiku

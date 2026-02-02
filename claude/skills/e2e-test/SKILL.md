@@ -1,6 +1,6 @@
 ---
 name: e2e-test
-description: E2E 테스트 실행 및 브라우저 상태 확인
+description: Run E2E tests and verify browser state
 argument-hint: <url-or-test-description>
 allowed-tools: Task, Bash, Read, Write
 model: sonnet
@@ -9,43 +9,43 @@ category: testing
 
 # E2E Test
 
-## ⚡ 즉시 실행
+## ⚡ Immediate Execution
 
-**아래 에이전트를 즉시 호출하세요:**
+**Call the agent below immediately:**
 
 ```
 Use the e2e-tester agent to test: $ARGUMENTS
 ```
 
-## 에이전트가 수행하는 작업
+## What the Agent Does
 
-1. **브라우저 실행** - Playwright MCP로 브라우저 제어
-2. **페이지 탐색** - URL 이동 및 상호작용
-3. **스크린샷 캡처** - 시각적 상태 확인
-4. **결과 분석** - 에러, 콘솔 로그, 네트워크 상태 확인
-5. **버그 수정** - 발견된 문제 자동 수정 시도
+1. **Launch browser** - Control browser with Playwright MCP
+2. **Navigate pages** - Go to URL and interact with elements
+3. **Capture screenshots** - Verify visual state
+4. **Analyze results** - Check errors, console logs, network status
+5. **Fix bugs** - Attempt to auto-fix discovered issues
 
-## Playwright MCP 도구
+## Playwright MCP Tools
 
-| 도구 | 설명 |
-|------|------|
-| `playwright_navigate` | URL로 이동 |
-| `playwright_screenshot` | 스크린샷 캡처 |
-| `playwright_click` | 요소 클릭 |
-| `playwright_fill` | 입력 필드 작성 |
-| `playwright_evaluate` | JavaScript 실행 |
-| `playwright_get_visible_text` | 화면 텍스트 추출 |
+| Tool | Description |
+|------|-------------|
+| `playwright_navigate` | Navigate to URL |
+| `playwright_screenshot` | Capture screenshot |
+| `playwright_click` | Click element |
+| `playwright_fill` | Fill input field |
+| `playwright_evaluate` | Execute JavaScript |
+| `playwright_get_visible_text` | Extract visible text |
 
-## 사용 예시
+## Usage Examples
 
 ```bash
-/e2e-test http://localhost:3000 로그인 기능 테스트
-/e2e-test 회원가입 폼 유효성 검사 확인
-/e2e-test 장바구니 추가/삭제 플로우
+/e2e-test http://localhost:3000 test login functionality
+/e2e-test verify signup form validation
+/e2e-test shopping cart add/remove flow
 ```
 
 ## Related Skills
 
-- `/run-tests`: 유닛/통합 테스트
-- `/fix-issue`: 버그 수정
-- `/code-quality`: 전체 품질 검사
+- `/run-tests`: Unit/integration tests
+- `/fix-issue`: Bug fixing
+- `/code-quality`: Full quality check

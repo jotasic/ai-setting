@@ -1,6 +1,6 @@
 ---
 name: lint
-description: 코드 린트 및 포맷팅을 실행합니다
+description: Run code linting and formatting
 argument-hint: [path] [--fix]
 allowed-tools: Bash, Read, Grep, Glob
 model: haiku

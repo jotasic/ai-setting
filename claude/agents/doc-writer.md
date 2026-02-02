@@ -1,6 +1,6 @@
 ---
 name: doc-writer
-description: 문서화를 담당하는 전문가. README, API 문서, 주석 등 문서 작성이 필요할 때 사용하세요.
+description: Documentation expert. Use for README, API docs, and code comments.
 tools: Read, Edit, Write, Grep, Glob
 model: haiku
 permissionMode: acceptEdits

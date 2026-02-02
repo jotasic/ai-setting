@@ -1,6 +1,6 @@
 ---
 name: dependency-manager
-description: 의존성 관리 전문가. 패키지 업그레이드, 보안 취약점 분석, 라이선스 호환성 검토가 필요할 때 사용하세요.
+description: Dependency management expert. Use for package upgrades, security vulnerability analysis, and license compatibility.
 tools: Read, Bash, Grep, Glob
 model: haiku
 ---
