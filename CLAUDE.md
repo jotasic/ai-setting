@@ -372,7 +372,7 @@ $ARGUMENTS
 - [Common Checklist](../_shared/common-checklist.md)
 ```
 
-### 리소스 패턴 (oh-my-ag 스타일)
+### 리소스 패턴
 
 복잡한 스킬/에이전트는 리소스 파일로 분리:
 
