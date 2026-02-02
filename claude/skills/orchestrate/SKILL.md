@@ -13,114 +13,35 @@ Automatically coordinate multiple specialized agents for complex features.
 
 ## When to Use
 
-- Full-stack implementation (backend + frontend + DB)
+- Full-stack implementation requiring multiple domains
 - User requests "auto execute" or "parallel processing"
-- Complex features requiring multiple domains
 
-**Don't use when:**
-- Single domain tasks (use domain agent directly)
-- Want manual step-by-step control (use `/workflow-guide`)
-- Minor bug fixes (use `/fix-issue`)
+**Don't use for:** Single domain tasks, manual control (use `/workflow-guide`)
 
-## Execution Phases
+## Execution Flow
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  PHASE 1: Analysis & Planning                                │
-│  ├─ Analyze requirements: $ARGUMENTS                         │
-│  ├─ Decompose into tasks                                     │
-│  └─ Create task board with TodoWrite                         │
-├─────────────────────────────────────────────────────────────┤
-│  PHASE 2: Task Board Setup                                   │
-│  ├─ Record all tasks in TodoWrite                            │
-│  ├─ Set priorities and dependencies                          │
-│  └─ Assign agents to each task                               │
-├─────────────────────────────────────────────────────────────┤
-│  PHASE 3: Parallel Execution                                 │
-│  ├─ Execute tasks by priority order                          │
-│  ├─ Run same-priority tasks in parallel (max 3)              │
-│  └─ Update TodoWrite as tasks complete                       │
-├─────────────────────────────────────────────────────────────┤
-│  PHASE 4: Verification                                       │
-│  ├─ Run build/lint/type-check after each phase               │
-│  ├─ If verification fails → retry with different approach    │
-│  └─ Max 2 retries per task                                   │
-├─────────────────────────────────────────────────────────────┤
-│  PHASE 5: Summary & Review                                   │
-│  ├─ Collect all results                                      │
-│  ├─ Run code-reviewer for final review                       │
-│  └─ Generate completion summary                              │
-└─────────────────────────────────────────────────────────────┘
+Plan → Setup → Execute (parallel) → Verify → Review
 ```
 
-## ⚡ Immediate Execution
-
-Start orchestration immediately:
-
-**Step 1: Plan**
-```
-Use the pm-agent to create task board for: $ARGUMENTS
-```
-
-**Step 2: Execute tasks by priority**
-
-For P0 tasks (execute first):
-```
-Use the [assigned-agent] agent to [task-description]
-```
-
-For same-priority tasks (execute in parallel):
-```
-Use the Task tool to launch multiple agents in parallel
-```
-
-**Step 3: Verify after each phase**
-```
-/code-quality
-```
-
-**Step 4: Final review**
-```
-Use the code-reviewer agent to review all changes
-```
+1. **Plan**: Use pm-agent to create task board for `$ARGUMENTS`
+2. **Execute**: Launch agents by priority (max 3 parallel)
+3. **Verify**: Run `/code-quality` after each phase
+4. **Review**: Use code-reviewer for final review
 
 ## Rules
 
-| Rule | Description |
-|------|-------------|
-| **Max Parallel** | Maximum 3 concurrent agent tasks |
-| **Verification Gate** | Must verify after each phase |
-| **Retry Logic** | Max 2 retries (30s, 60s delay), then try different approach |
-| **Task Ownership** | Each agent manages its own task progress |
+- Max 3 concurrent agents
+- Verification gate after each phase
+- Max 2 retries per failed task
 
-## Output Format
+## References
 
-```
-Orchestration Complete
-═══════════════════════════════════════
+- [Execution Protocol](resources/execution-protocol.md)
+- [Output Format](resources/output-format.md)
+- [Agent Routing](../_shared/skill-routing.md)
+- [Verification](../_shared/verification-protocol.md)
 
-Feature: [feature name]
-Status: ✅ SUCCESS / ❌ PARTIAL / ❌ FAILED
+## Related
 
-Tasks Completed: X/Y
-├─ ✅ T-001: [task] (backend-developer)
-├─ ✅ T-002: [task] (frontend-developer)
-└─ ❌ T-003: [task] (test-writer) - [reason]
-
-Verification:
-├─ Build: ✅ PASS
-├─ Lint: ✅ PASS
-├─ Type Check: ✅ PASS
-└─ Tests: ✅ PASS
-
-Next Steps:
-- [any remaining work]
-- [recommended follow-up]
-═══════════════════════════════════════
-```
-
-## Related Skills
-
-- `/workflow-guide`: Manual step-by-step coordination
-- `/full-dev`: Full development flow
-- `/plan`: Planning only (no execution)
+`/workflow-guide` | `/full-dev` | `/plan`

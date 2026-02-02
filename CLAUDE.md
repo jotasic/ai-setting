@@ -14,13 +14,85 @@ cp -r claude /your/project/.claude
 ln -s /path/to/ai-setting/claude /your/project/.claude
 ```
 
+---
+
+## How to Use (운영 가이드)
+
+### 스킬 vs 에이전트
+
+| 구분 | 스킬 (Skill) | 에이전트 (Agent) |
+|------|-------------|-----------------|
+| 호출 방식 | `/skill-name` 슬래시 커맨드 | `Use the agent-name agent to...` |
+| 용도 | 정형화된 작업 플로우 | 특정 도메인 전문 작업 |
+| 예시 | `/build`, `/commit`, `/orchestrate` | `architect`, `backend-developer` |
+
+### 작업 복잡도별 선택
+
+```
+단순 작업 ─────────────────────────────────────── 복잡한 작업
+
+/build          에이전트 직접 호출      /orchestrate
+/lint           "Use backend-developer  (멀티 에이전트 자동)
+/commit          agent to..."
+                                       /workflow-guide
+                                       (멀티 에이전트 수동)
+```
+
+### 멀티 에이전트 워크플로우
+
+**자동 실행** (`/orchestrate`):
+```
+/orchestrate user notification system
+```
+→ pm-agent가 작업 분해 → 에이전트 자동 할당 → 병렬 실행 → 검증
+
+**수동 실행** (`/workflow-guide`):
+```
+/workflow-guide user notification system
+```
+→ 단계별 가이드 제공 → 사용자가 직접 에이전트 호출
+
+**계획만** (`/plan`):
+```
+/plan user notification system
+```
+→ 작업 계획만 생성 (실행 없음)
+
+### 리소스 로딩 방식
+
+```
+사용자: /orchestrate payment system
+
+Claude:
+1. SKILL.md 로드 (47줄, 간결)
+2. 필요시 resources/ 참조
+   └─ execution-protocol.md
+   └─ ../_shared/verification-protocol.md
+3. 토큰 절약 - 필요할 때만 로드
+```
+
+### 실전 예시
+
+| 상황 | 명령 |
+|------|------|
+| API 엔드포인트 추가 | `Use the backend-developer agent to add POST /users endpoint` |
+| 버그 수정 | `/fix-issue 123` 또는 `Use the debugger agent to fix...` |
+| 새 기능 (자동) | `/orchestrate shopping cart feature` |
+| 새 기능 (수동) | `/workflow-guide shopping cart feature` |
+| 코드 품질 검사 | `/code-quality` |
+| PR 생성 전 | `/lint --fix && /run-tests && /commit` |
+
+---
+
 ## Project Structure
 
 ```
 .
 ├── claude/                 # Claude Code 설정
 │   ├── agents/            # 19개의 커스텀 서브에이전트
+│   │   └── resources/     # 에이전트 공통 리소스
 │   ├── skills/            # 29개의 커스텀 스킬
+│   │   └── _shared/       # 스킬 공통 리소스
 │   ├── settings.json      # 권한 및 환경 설정
 │   ├── mcp.json           # MCP 서버 설정
 │   └── hooks.json         # 훅 설정
@@ -277,6 +349,9 @@ model: sonnet
 ---
 
 에이전트 프롬프트 내용...
+
+## References
+- [Agent Assignment Guide](resources/agent-assignment-guide.md)
 ```
 
 ### 새 스킬 추가
@@ -291,7 +366,30 @@ argument-hint: [arguments]
 
 스킬 프롬프트 내용...
 $ARGUMENTS
+
+## References
+- [Execution Protocol](resources/execution-protocol.md)
+- [Common Checklist](../_shared/common-checklist.md)
 ```
+
+### 리소스 패턴 (oh-my-ag 스타일)
+
+복잡한 스킬/에이전트는 리소스 파일로 분리:
+
+```
+skill-name/
+├── SKILL.md              # 간결한 메인 (~40줄)
+└── resources/
+    ├── execution-protocol.md
+    ├── examples.md
+    └── output-format.md
+```
+
+**공통 리소스 (`_shared/`):**
+- `skill-routing.md`: 에이전트 라우팅 맵
+- `common-checklist.md`: 코드 품질 체크리스트
+- `verification-protocol.md`: 검증 프로토콜
+- `context-budget.md`: 컨텍스트 예산 가이드
 
 ---
 
