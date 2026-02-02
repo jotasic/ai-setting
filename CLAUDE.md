@@ -19,8 +19,8 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 ```
 .
 ├── claude/                 # Claude Code 설정
-│   ├── agents/            # 18개의 커스텀 서브에이전트
-│   ├── skills/            # 25개의 커스텀 스킬
+│   ├── agents/            # 19개의 커스텀 서브에이전트
+│   ├── skills/            # 29개의 커스텀 스킬
 │   ├── settings.json      # 권한 및 환경 설정
 │   ├── mcp.json           # MCP 서버 설정
 │   └── hooks.json         # 훅 설정
@@ -44,7 +44,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 
 ---
 
-## Agents (서브에이전트) - 18개
+## Agents (서브에이전트) - 19개
 
 ### 모델별 에이전트 분류
 
@@ -66,6 +66,7 @@ ln -s /path/to/ai-setting/claude /your/project/.claude
 | **sonnet** | `database-specialist` | 스키마 설계, 쿼리 최적화 |
 | **sonnet** | `claudemd-generator` | 세션 기반 CLAUDE.md 자동 생성 |
 | **sonnet** | `spec-writer` | 기획서(PRD) 작성 (기술 구현은 architect가 담당) |
+| **sonnet** | `pm-agent` | 복잡한 요구사항을 작업으로 분해, 에이전트 할당 |
 | **haiku** | `doc-writer` | 문서화, README, API 문서 |
 | **haiku** | `dependency-manager` | 의존성 관리, 보안 업데이트 |
 
@@ -79,11 +80,12 @@ Have the general-developer agent create a data migration script
 Have the security-auditor agent review the auth module
 Ask the devops-specialist to set up CI/CD pipeline
 Use the e2e-tester agent to test the login flow on http://localhost:3000
+Use the pm-agent to create task board for user notification system
 ```
 
 ---
 
-## Skills (슬래시 커맨드) - 26개
+## Skills (슬래시 커맨드) - 29개
 
 ### Development Workflow
 
@@ -103,6 +105,9 @@ Use the e2e-tester agent to test the login flow on http://localhost:3000
 | Skill | Usage | Description |
 |-------|-------|-------------|
 | `/full-dev` | `/full-dev <feature>` | 기획→설계→구현→테스트→문서화 전체 플로우 |
+| `/plan` | `/plan <feature>` | 작업 계획만 생성 (실행 없음) |
+| `/orchestrate` | `/orchestrate <feature>` | 멀티 에이전트 자동 조율 실행 |
+| `/workflow-guide` | `/workflow-guide <feature>` | 멀티 에이전트 수동 단계별 가이드 |
 | `/new-feature` | `/new-feature [desc]` | 새 기능 구현 |
 | `/fix-issue` | `/fix-issue [number]` | GitHub 이슈 수정 |
 | `/review-pr` | `/review-pr` | PR 리뷰 |
