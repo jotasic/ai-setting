@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json.schemastore.org/claude-mcp.json",
+  "_comment": "ROS2-Unity Palletizing Simulation MCP 설정",
+  "mcpServers": {
+    "filesystem": {
+      "_comment": "프로젝트 파일시스템 접근",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-filesystem",
+        "./ros2_ws",
+        "./unity_ws"
+      ]
+    },
+    "github": {
+      "_comment": "GitHub API - Unity Robotics Hub, MoveIt2 이슈 참조",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "git": {
+      "_comment": "Git 히스토리 관리",
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "."]
+    },
+    "docker": {
+      "_comment": "ROS2 Docker 컨테이너 관리",
+      "command": "uvx",
+      "args": ["mcp-server-docker"]
+    },
+    "memory": {
+      "_comment": "프로젝트 지식 그래프 - URDF 파라미터, 좌표 변환 등 기록",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-memory"]
+    },
+    "fetch": {
+      "_comment": "ROS Wiki, Unity Docs 참조",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    },
+    "sequential-thinking": {
+      "_comment": "복잡한 경로 계획, BT 로직 설계 추론",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-sequential-thinking"]
+    },
+    "time": {
+      "_comment": "시뮬레이션 타이밍 정보",
+      "command": "uvx",
+      "args": ["mcp-server-time"]
+    }
+  }
+}
