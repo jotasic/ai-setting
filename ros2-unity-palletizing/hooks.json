@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json.schemastore.org/claude-hooks.json",
+  "_comment": "ROS2-Unity Palletizing 프로젝트 훅 설정",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "_comment": "위험한 ROS2/Docker 명령어 차단",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$CLAUDE_TOOL_INPUT\" | grep -qE '(rm -rf /|sudo rm|docker system prune -af|ros2 lifecycle set.*shutdown)' && echo 'BLOCK: Dangerous command detected' && exit 1 || exit 0"
+          }
+        ]
+      },
+      {
+        "_comment": "URDF 수정 전 백업 경고",
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$CLAUDE_TOOL_INPUT\" | grep -qE '\\.urdf|\\.xacro' && echo 'INFO: Modifying robot model file - ensure backup exists' || exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "_comment": "Python ROS2 노드 수정 후 린트",
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q '\\.py$'; then python3 -m py_compile \"$CLAUDE_FILE_PATH\" 2>/dev/null || echo 'Python syntax warning'; fi; exit 0"
+          }
+        ]
+      },
+      {
+        "_comment": "C# Unity 스크립트 수정 후 문법 체크",
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q '\\.cs$'; then echo 'INFO: C# file modified - rebuild Unity project to verify'; fi; exit 0"
+          }
+        ]
+      },
+      {
+        "_comment": "URDF 수정 후 검증",
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q '\\.urdf$'; then check_urdf \"$CLAUDE_FILE_PATH\" 2>/dev/null || echo 'URDF validation warning'; fi; exit 0"
+          }
+        ]
+      },
+      {
+        "_comment": "launch 파일 수정 후 문법 체크",
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'launch\\.py$'; then python3 -m py_compile \"$CLAUDE_FILE_PATH\" 2>/dev/null || echo 'Launch file syntax warning'; fi; exit 0"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "_comment": "빌드 완료 알림",
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "# notify-send 'ROS2-Unity Sim' 'Build completed'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "_comment": "세션 종료 시 ROS2 노드 정리",
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "# pkill -f ros2 2>/dev/null; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
