@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json.schemastore.org/claude-mcp.json",
+  "_comment": "임베디드 개발용 MCP 서버 설정. 실제 사용 시 경로와 환경변수를 조정하세요.",
+  "mcpServers": {
+    "filesystem": {
+      "_comment": "프로젝트 파일시스템 접근 (소스코드, IAR 프로젝트, .map 파일 등)",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic/mcp-server-filesystem",
+        "/path/to/firmware/project"
+      ]
+    },
+    "github": {
+      "_comment": "GitHub API - 이슈, PR, 코드 리뷰",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "git": {
+      "_comment": "Git 히스토리 - 변경 추적, blame, diff",
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "."]
+    },
+    "memory": {
+      "_comment": "지식 그래프 메모리 - 페리페럴 할당, 핀맵, 모듈 의존성 기록",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-memory"]
+    },
+    "sequential-thinking": {
+      "_comment": "복잡한 리팩토링 계획, 의존성 분석에 활용",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-sequential-thinking"]
+    },
+    "fetch": {
+      "_comment": "ST 데이터시트, 레퍼런스 매뉴얼 참조",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  }
+}
